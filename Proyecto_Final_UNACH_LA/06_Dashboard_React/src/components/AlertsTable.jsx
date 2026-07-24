@@ -13,12 +13,12 @@ export default function AlertsTable({ data }) {
 
   const topAlerts = data.slice(0, 15);
 
-  const handleCheckboxChange = (student) => {
+  const handleCheckboxChange = (student, index) => {
     setSelectedForComparison(prev => {
-      if (prev.find(s => s.id_estudiante === student.id_estudiante)) {
-        return prev.filter(s => s.id_estudiante !== student.id_estudiante);
+      if (prev.find(s => s.tableIndex === index)) {
+        return prev.filter(s => s.tableIndex !== index);
       } else {
-        if (prev.length < 2) return [...prev, student];
+        if (prev.length < 2) return [...prev, { ...student, tableIndex: index }];
         return prev; // Max 2
       }
     });
@@ -79,13 +79,13 @@ export default function AlertsTable({ data }) {
                 if (alerta.nivel_riesgo === 'MEDIO') badge = 'badge-yellow';
 
                 return (
-                  <tr key={index} style={{ background: selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante) ? 'rgba(2, 132, 199, 0.05)' : '' }}>
+                  <tr key={index} style={{ background: selectedForComparison.find(s => s.tableIndex === index) ? 'rgba(2, 132, 199, 0.05)' : '' }}>
                     <td>
                       <input 
                         type="checkbox" 
-                        checked={!!selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante)}
-                        onChange={() => handleCheckboxChange(alerta)}
-                        disabled={selectedForComparison.length >= 2 && !selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante)}
+                        checked={!!selectedForComparison.find(s => s.tableIndex === index)}
+                        onChange={() => handleCheckboxChange(alerta, index)}
+                        disabled={selectedForComparison.length >= 2 && !selectedForComparison.find(s => s.tableIndex === index)}
                         style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
                         title="Seleccionar para comparar (Máx 2)"
                       />
