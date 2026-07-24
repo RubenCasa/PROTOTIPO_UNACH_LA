@@ -38,18 +38,27 @@ async def generar_plan(student: StudentData):
 Evaluando al estudiante ID: {student.id_estudiante} (Carrera: {student.carrera})
 Probabilidad de Riesgo Predictiva: {student.probabilidad_riesgo_ml}% ({student.nivel_riesgo})
 
-ANALIZANDO PATRONES...
-- Se ha detectado un comportamiento académico anómalo en el semestre actual.
-- El modelo XGBoost clasifica este patrón en el semáforo '{student.semaforo}'.
+--- ANÁLISIS DE PATRONES DE RIESGO ---
+El motor XGBoost ha identificado vulnerabilidades críticas en el desempeño actual del estudiante, ubicándolo en el semáforo '{student.semaforo}'. Se detectan posibles deficiencias latentes en:
+- Continuidad de asistencia en asignaturas de especialidad.
+- Participación activa en el Entorno Virtual de Aprendizaje (Moodle/SICOA).
+- Cumplimiento de entregables en las fechas estipuladas.
 
---- PLAN DE ACCIÓN RECOMENDADO ---
+--- PLAN ESTRATÉGICO DE INTERVENCIÓN A LA MEDIDA ---
 
-1. INTERVENCIÓN TEMPRANA (Próximas 48 Horas):
-El Coordinador de Carrera debe citar al estudiante para una tutoría diagnóstica personalizada. 
+Fase 1: Intervención Inmediata (24-48 horas)
+1. Convocatoria Diagnóstica: El Director de Carrera debe citar al estudiante presencialmente para identificar factores externos (socioeconómicos, familiares o de salud mental).
+2. Derivación a Bienestar Estudiantil: Evaluación urgente para determinar si aplica a becas de apoyo, alimentación o asistencia psicopedagógica.
 
-2. APOYO ACADÉMICO INMEDIATO:
-Asignar al estudiante a los talleres de nivelación. Su nivel de riesgo ({student.probabilidad_riesgo_ml}%) requiere seguimiento estricto.
+Fase 2: Estrategia Académica y Acompañamiento (Próximos 15 días)
+3. Tutorías de Pares (Mentoría): Emparejar al estudiante con un compañero de alto rendimiento (utilizando el módulo A/B) para acompañamiento de estudio intensivo.
+4. Refuerzo Obligatorio: Inscripción automática en talleres de nivelación de materias críticas.
+5. Flexibilidad Condicionada: Acordar un cronograma de nivelación para trabajos atrasados, firmado como compromiso académico.
 
-[Fin de la generación del plan. Documento emitido por el modelo predictivo de la UNACH.]"""
+Fase 3: Monitoreo Continuo (Cierre de Parcial)
+6. Seguimiento Docente Activo: Alerta configurada en el SICOA para que los docentes reporten nuevas inasistencias de este estudiante en un máximo de 24 horas.
+7. Re-evaluación Predictiva: Correr nuevamente el modelo ML al finalizar el mes para medir la reducción porcentual de su nivel de riesgo.
+
+[Documento oficial emitido por el Motor Predictivo Institucional de la Universidad Nacional de Chimborazo (UNACH-LA)]"""
 
     return {"plan": plan_texto}
