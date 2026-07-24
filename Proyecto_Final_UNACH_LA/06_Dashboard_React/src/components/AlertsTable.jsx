@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import AIPlanModal from './AIPlanModal';
-import { Sparkles } from 'lucide-react';
+import StudentProfileModal from './StudentProfileModal';
+import { Sparkles, User } from 'lucide-react';
 
 export default function AlertsTable({ data }) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAIModalOpen, setIsAIModalOpen] = useState(false);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
 
   const topAlerts = data.slice(0, 15);
 
   const handleOpenAIPlan = (student) => {
     setSelectedStudent(student);
-    setIsModalOpen(true);
+    setIsAIModalOpen(true);
+  };
+
+  const handleOpenProfile = (student) => {
+    setSelectedStudent(student);
+    setIsProfileModalOpen(true);
   };
 
   return (
@@ -41,10 +48,19 @@ export default function AlertsTable({ data }) {
                 return (
                   <tr key={index}>
                     <td>
-                      <strong>{alerta.id_estudiante}</strong><br/>
-                      <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
-                        {alerta.carrera}
-                      </span>
+                      <button 
+                        onClick={() => handleOpenProfile(alerta)}
+                        style={{ background: 'none', border: 'none', textAlign: 'left', cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: '2px' }}
+                        className="student-id-btn"
+                        title="Ver Perfil 360°"
+                      >
+                        <strong style={{ display: 'flex', alignItems: 'center', gap: '5px', color: 'var(--accent-blue)', textDecoration: 'underline' }}>
+                          <User size={14} /> {alerta.id_estudiante}
+                        </strong>
+                        <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                          {alerta.carrera}
+                        </span>
+                      </button>
                     </td>
                     <td>
                       {alerta.probabilidad_riesgo_ml}%
@@ -78,9 +94,15 @@ export default function AlertsTable({ data }) {
       </div>
 
       <AIPlanModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+        isOpen={isAIModalOpen} 
+        onClose={() => setIsAIModalOpen(false)} 
         studentData={selectedStudent} 
+      />
+
+      <StudentProfileModal
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        studentData={selectedStudent}
       />
     </>
   );

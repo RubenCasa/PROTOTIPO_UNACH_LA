@@ -67,6 +67,15 @@ Configurar una alerta de seguimiento a 15 días. Si las calificaciones del prime
     }
   }, [step, fullText]);
 
+  const handleExport = () => {
+    const element = document.createElement("a");
+    const file = new Blob([fullText], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = `Plan_Intervencion_${studentData?.id_estudiante || 'UNACH'}.txt`;
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  };
+
   if (!isOpen) return null;
 
   return (
@@ -105,8 +114,8 @@ Configurar una alerta de seguimiento a 15 días. Si las calificaciones del prime
             <button className="btn-secondary" onClick={onClose}>
               Cerrar
             </button>
-            <button className="btn-ai-action">
-              <FileText size={18} /> Exportar Plan a SICOA
+            <button className="btn-ai-action" onClick={handleExport}>
+              <FileText size={18} /> Exportar Plan (.txt)
             </button>
           </div>
         )}

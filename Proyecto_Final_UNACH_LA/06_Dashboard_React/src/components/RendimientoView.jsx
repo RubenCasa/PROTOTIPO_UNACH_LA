@@ -1,5 +1,6 @@
 import React from 'react';
 import KPIGrid from './KPIGrid';
+import PredictionChart from './PredictionChart';
 import { TrendingUp } from 'lucide-react';
 
 export default function RendimientoView({ kpis }) {
@@ -17,9 +18,9 @@ export default function RendimientoView({ kpis }) {
       
       <KPIGrid data={kpis} />
       
-      <div className="glass-panel" style={{ minHeight: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <p style={{ color: 'var(--text-muted)' }}>Módulo de visualización avanzada en desarrollo. (Gráficas de Series Temporales SICOA)</p>
-      </div>
+      {/* Gráfica de Proyección Lineal */}
+      <PredictionChart />
+      
     </div>
   );
 }
