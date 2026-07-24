@@ -1,9 +1,0 @@
-{
-  "redirects": [
-    {
-      "source": "/",
-      "destination": "/06_Dashboard_Interactivo/index.html",
-      "permanent": false
-    }
-  ]
-}
