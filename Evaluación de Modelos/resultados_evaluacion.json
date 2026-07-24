@@ -1,0 +1,290 @@
+{
+  "fecha_evaluacion": "2026-07-24 09:54:26",
+  "best_model": "XGBoost",
+  "n_features": 66,
+  "feature_names": [
+    "matricula_vigente",
+    "ultimo_nivel",
+    "niveles_aprobados",
+    "aprobadas_1ra",
+    "aprobadas_2da",
+    "aprobadas_3ra",
+    "nivel",
+    "nombre_asignatura",
+    "matriculas_asignatura",
+    "asistencia",
+    "tutorias",
+    "puntaje_admision",
+    "matriculas_nivelacion",
+    "promedio_nivelacion",
+    "num_retiros",
+    "num_reingresos",
+    "genero",
+    "etnia",
+    "canton_procedencia",
+    "provincia_procedencia",
+    "sector_procedencia",
+    "canton_residencia",
+    "provincia_residencia",
+    "sector_residencia",
+    "enfermedad",
+    "beca",
+    "tipo_beca",
+    "vulnerabilidad",
+    "dificultad_aprendizaje",
+    "edad",
+    "total_eventos",
+    "total_sesiones",
+    "duracion_total_seg",
+    "duracion_promedio_seg",
+    "tiempo_conexion_total_min",
+    "tiempo_conexion_promedio_min",
+    "calificacion_lms_promedio",
+    "calificacion_lms_max",
+    "calificacion_lms_min",
+    "calificacion_lms_std",
+    "dias_activos",
+    "eventos_por_dia",
+    "evt_assignment_submitted",
+    "evt_assignment_viewed",
+    "evt_course_viewed",
+    "evt_forum_post",
+    "evt_forum_viewed",
+    "evt_page_viewed",
+    "evt_quiz_attempted",
+    "evt_quiz_submitted",
+    "evt_resource_viewed",
+    "evt_url_viewed",
+    "comp_archivo_pdf",
+    "comp_cuestionario",
+    "comp_curso",
+    "comp_foro",
+    "comp_página",
+    "comp_tarea",
+    "comp_url",
+    "tasa_errores",
+    "dispositivo_principal",
+    "navegador_principal",
+    "so_principal",
+    "actividad_finde",
+    "franja_preferida",
+    "asignaturas_lms"
+  ],
+  "train_size": 3200,
+  "test_size": 800,
+  "target_distribution": {
+    "en_riesgo": 1879,
+    "sin_riesgo": 2121
+  },
+  "resultados_cv": {
+    "Logistic Regression": {
+      "accuracy_mean": 0.509375,
+      "accuracy_std": 0.015341172135791954,
+      "precision_mean": 0.4716794032625019,
+      "precision_std": 0.02128041277317882,
+      "recall_mean": 0.35396234772978963,
+      "recall_std": 0.010112866586809367,
+      "f1_mean": 0.40398635455465753,
+      "f1_std": 0.006031654945679016,
+      "roc_auc_mean": 0.5121966843127455,
+      "roc_auc_std": 0.020948997220843243,
+      "train_accuracy_mean": 0.56453125,
+      "train_f1_mean": 0.4637859430153319
+    },
+    "Decision Tree": {
+      "accuracy_mean": 0.5203125,
+      "accuracy_std": 0.019838212810129843,
+      "precision_mean": 0.48831886360574916,
+      "precision_std": 0.022272542975945085,
+      "recall_mean": 0.43584274640088594,
+      "recall_std": 0.06068942755173133,
+      "f1_mean": 0.45851252744959436,
+      "f1_std": 0.03771219432274747,
+      "roc_auc_mean": 0.5250694627140834,
+      "roc_auc_std": 0.027289410951564657,
+      "train_accuracy_mean": 0.76328125,
+      "train_f1_mean": 0.7298425232699947
+    },
+    "Random Forest": {
+      "accuracy_mean": 0.51625,
+      "accuracy_std": 0.00976281209488333,
+      "precision_mean": 0.4816005127756804,
+      "precision_std": 0.013366808008466255,
+      "recall_mean": 0.3898671096345515,
+      "recall_std": 0.01655021031246619,
+      "f1_mean": 0.43074961222061764,
+      "f1_std": 0.01343608385614744,
+      "roc_auc_mean": 0.5088533714041286,
+      "roc_auc_std": 0.012178800503780287,
+      "train_accuracy_mean": 0.9998437499999999,
+      "train_f1_mean": 0.9998336106201275
+    },
+    "XGBoost": {
+      "accuracy_mean": 0.51,
+      "accuracy_std": 0.019975571018121103,
+      "precision_mean": 0.47651227109862154,
+      "precision_std": 0.023046941033671713,
+      "recall_mean": 0.42780730897009966,
+      "recall_std": 0.014247089525615254,
+      "f1_mean": 0.4507190391608377,
+      "f1_std": 0.016918406103180416,
+      "roc_auc_mean": 0.5088795963250499,
+      "roc_auc_std": 0.01652896949714582,
+      "train_accuracy_mean": 1.0,
+      "train_f1_mean": 1.0
+    },
+    "SVM": {
+      "accuracy_mean": 0.51875,
+      "accuracy_std": 0.01705918007994521,
+      "precision_mean": 0.4838673970615708,
+      "precision_std": 0.026045292546811222,
+      "recall_mean": 0.3446666666666667,
+      "recall_std": 0.029111714586016406,
+      "f1_mean": 0.40171238739815934,
+      "f1_std": 0.02176953205881365,
+      "roc_auc_mean": 0.5149013548452928,
+      "roc_auc_std": 0.01725113488126294,
+      "train_accuracy_mean": 0.8469531250000001,
+      "train_f1_mean": 0.8217986137956472
+    }
+  },
+  "resultados_test": {
+    "Logistic Regression": {
+      "accuracy": 0.52,
+      "precision": 0.48518518518518516,
+      "recall": 0.3484042553191489,
+      "f1": 0.4055727554179567,
+      "auc_roc": 0.5136742272179847,
+      "avg_precision": 0.47426372857995686,
+      "specificity": 0.6721698113207547,
+      "confusion_matrix": [
+        [
+          285,
+          139
+        ],
+        [
+          245,
+          131
+        ]
+      ],
+      "tn": 285,
+      "fp": 139,
+      "fn": 245,
+      "tp": 131
+    },
+    "Decision Tree": {
+      "accuracy": 0.49375,
+      "precision": 0.46070460704607047,
+      "recall": 0.4521276595744681,
+      "f1": 0.4563758389261745,
+      "auc_roc": 0.5048455690485749,
+      "avg_precision": 0.47246205227372856,
+      "specificity": 0.5306603773584906,
+      "confusion_matrix": [
+        [
+          225,
+          199
+        ],
+        [
+          206,
+          170
+        ]
+      ],
+      "tn": 225,
+      "fp": 199,
+      "fn": 206,
+      "tp": 170
+    },
+    "Random Forest": {
+      "accuracy": 0.52,
+      "precision": 0.4869281045751634,
+      "recall": 0.3962765957446808,
+      "f1": 0.436950146627566,
+      "auc_roc": 0.5120496286631875,
+      "avg_precision": 0.4868059836509235,
+      "specificity": 0.6297169811320755,
+      "confusion_matrix": [
+        [
+          267,
+          157
+        ],
+        [
+          227,
+          149
+        ]
+      ],
+      "tn": 267,
+      "fp": 157,
+      "fn": 227,
+      "tp": 149
+    },
+    "XGBoost": {
+      "accuracy": 0.54375,
+      "precision": 0.515850144092219,
+      "recall": 0.47606382978723405,
+      "f1": 0.4951590594744122,
+      "auc_roc": 0.5313629064632677,
+      "avg_precision": 0.49317855439736896,
+      "specificity": 0.6037735849056604,
+      "confusion_matrix": [
+        [
+          256,
+          168
+        ],
+        [
+          197,
+          179
+        ]
+      ],
+      "tn": 256,
+      "fp": 168,
+      "fn": 197,
+      "tp": 179
+    },
+    "SVM": {
+      "accuracy": 0.51625,
+      "precision": 0.48014440433212996,
+      "recall": 0.3537234042553192,
+      "f1": 0.40735068912710565,
+      "auc_roc": 0.5013674227217985,
+      "avg_precision": 0.45907882843854186,
+      "specificity": 0.660377358490566,
+      "confusion_matrix": [
+        [
+          280,
+          144
+        ],
+        [
+          243,
+          133
+        ]
+      ],
+      "tn": 280,
+      "fp": 144,
+      "fn": 243,
+      "tp": 133
+    }
+  },
+  "top_features": {
+    "comp_cuestionario": 0.02126411907374859,
+    "franja_preferida": 0.020602712407708168,
+    "evt_quiz_submitted": 0.020533284172415733,
+    "comp_foro": 0.02027071639895439,
+    "tiempo_conexion_promedio_min": 0.02006031759083271,
+    "comp_tarea": 0.020038845017552376,
+    "evt_page_viewed": 0.01986282877624035,
+    "duracion_total_seg": 0.01949096843600273,
+    "actividad_finde": 0.019360998645424843,
+    "sector_residencia": 0.01932770200073719,
+    "calificacion_lms_min": 0.019260985776782036,
+    "evt_quiz_attempted": 0.018796151503920555,
+    "navegador_principal": 0.01874866522848606,
+    "tasa_errores": 0.018533803522586823,
+    "dias_activos": 0.01828661747276783,
+    "puntaje_admision": 0.018099483102560043,
+    "tipo_beca": 0.017729749903082848,
+    "dispositivo_principal": 0.017564749345183372,
+    "aprobadas_2da": 0.017454927787184715,
+    "tiempo_conexion_total_min": 0.01721377484500408
+  }
+}

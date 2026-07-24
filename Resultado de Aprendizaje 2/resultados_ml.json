@@ -1,0 +1,228 @@
+{
+  "best_model": "XGBoost",
+  "feature_names": [
+    "matricula_vigente",
+    "ultimo_nivel",
+    "niveles_aprobados",
+    "aprobadas_1ra",
+    "aprobadas_2da",
+    "aprobadas_3ra",
+    "nivel",
+    "nombre_asignatura",
+    "matriculas_asignatura",
+    "asistencia",
+    "tutorias",
+    "puntaje_admision",
+    "matriculas_nivelacion",
+    "promedio_nivelacion",
+    "num_retiros",
+    "num_reingresos",
+    "genero",
+    "etnia",
+    "canton_procedencia",
+    "provincia_procedencia",
+    "sector_procedencia",
+    "canton_residencia",
+    "provincia_residencia",
+    "sector_residencia",
+    "enfermedad",
+    "beca",
+    "tipo_beca",
+    "vulnerabilidad",
+    "dificultad_aprendizaje",
+    "edad",
+    "total_eventos",
+    "total_sesiones",
+    "duracion_total_seg",
+    "duracion_promedio_seg",
+    "tiempo_conexion_total_min",
+    "tiempo_conexion_promedio_min",
+    "calificacion_lms_promedio",
+    "calificacion_lms_max",
+    "calificacion_lms_min",
+    "calificacion_lms_std",
+    "dias_activos",
+    "eventos_por_dia",
+    "evt_assignment_submitted",
+    "evt_assignment_viewed",
+    "evt_course_viewed",
+    "evt_forum_post",
+    "evt_forum_viewed",
+    "evt_page_viewed",
+    "evt_quiz_attempted",
+    "evt_quiz_submitted",
+    "evt_resource_viewed",
+    "evt_url_viewed",
+    "comp_archivo_pdf",
+    "comp_cuestionario",
+    "comp_curso",
+    "comp_foro",
+    "comp_página",
+    "comp_tarea",
+    "comp_url",
+    "tasa_errores",
+    "dispositivo_principal",
+    "navegador_principal",
+    "so_principal",
+    "actividad_finde",
+    "franja_preferida",
+    "asignaturas_lms"
+  ],
+  "resultados_cv": {
+    "Logistic Regression": {
+      "accuracy_mean": 0.509375,
+      "accuracy_std": 0.015341172135791954,
+      "f1_mean": 0.40398635455465753,
+      "f1_std": 0.006031654945679016,
+      "roc_auc_mean": 0.5121966843127455,
+      "roc_auc_std": 0.020948997220843243
+    },
+    "Decision Tree": {
+      "accuracy_mean": 0.5203125,
+      "accuracy_std": 0.019838212810129843,
+      "f1_mean": 0.45851252744959436,
+      "f1_std": 0.03771219432274747,
+      "roc_auc_mean": 0.5250694627140834,
+      "roc_auc_std": 0.027289410951564657
+    },
+    "Random Forest": {
+      "accuracy_mean": 0.51625,
+      "accuracy_std": 0.00976281209488333,
+      "f1_mean": 0.43074961222061764,
+      "f1_std": 0.01343608385614744,
+      "roc_auc_mean": 0.5088533714041286,
+      "roc_auc_std": 0.012178800503780287
+    },
+    "XGBoost": {
+      "accuracy_mean": 0.51,
+      "accuracy_std": 0.019975571018121103,
+      "f1_mean": 0.4507190391608377,
+      "f1_std": 0.016918406103180416,
+      "roc_auc_mean": 0.5088795963250499,
+      "roc_auc_std": 0.01652896949714582
+    },
+    "SVM": {
+      "accuracy_mean": 0.51875,
+      "accuracy_std": 0.01705918007994521,
+      "f1_mean": 0.40171238739815934,
+      "f1_std": 0.02176953205881365,
+      "roc_auc_mean": 0.5149013548452928,
+      "roc_auc_std": 0.01725113488126294
+    }
+  },
+  "resultados_test": {
+    "Logistic Regression": {
+      "accuracy": 0.52,
+      "precision": 0.48518518518518516,
+      "recall": 0.3484042553191489,
+      "f1": 0.4055727554179567,
+      "auc_roc": 0.5136742272179847,
+      "confusion_matrix": [
+        [
+          285,
+          139
+        ],
+        [
+          245,
+          131
+        ]
+      ]
+    },
+    "Decision Tree": {
+      "accuracy": 0.49375,
+      "precision": 0.46070460704607047,
+      "recall": 0.4521276595744681,
+      "f1": 0.4563758389261745,
+      "auc_roc": 0.5048455690485749,
+      "confusion_matrix": [
+        [
+          225,
+          199
+        ],
+        [
+          206,
+          170
+        ]
+      ]
+    },
+    "Random Forest": {
+      "accuracy": 0.52,
+      "precision": 0.4869281045751634,
+      "recall": 0.3962765957446808,
+      "f1": 0.436950146627566,
+      "auc_roc": 0.5120496286631875,
+      "confusion_matrix": [
+        [
+          267,
+          157
+        ],
+        [
+          227,
+          149
+        ]
+      ]
+    },
+    "XGBoost": {
+      "accuracy": 0.54375,
+      "precision": 0.515850144092219,
+      "recall": 0.47606382978723405,
+      "f1": 0.4951590594744122,
+      "auc_roc": 0.5313629064632677,
+      "confusion_matrix": [
+        [
+          256,
+          168
+        ],
+        [
+          197,
+          179
+        ]
+      ]
+    },
+    "SVM": {
+      "accuracy": 0.51625,
+      "precision": 0.48014440433212996,
+      "recall": 0.3537234042553192,
+      "f1": 0.40735068912710565,
+      "auc_roc": 0.5013674227217985,
+      "confusion_matrix": [
+        [
+          280,
+          144
+        ],
+        [
+          243,
+          133
+        ]
+      ]
+    }
+  },
+  "top_features": {
+    "comp_cuestionario": 0.02126411907374859,
+    "franja_preferida": 0.020602712407708168,
+    "evt_quiz_submitted": 0.020533284172415733,
+    "comp_foro": 0.02027071639895439,
+    "tiempo_conexion_promedio_min": 0.02006031759083271,
+    "comp_tarea": 0.020038845017552376,
+    "evt_page_viewed": 0.01986282877624035,
+    "duracion_total_seg": 0.01949096843600273,
+    "actividad_finde": 0.019360998645424843,
+    "sector_residencia": 0.01932770200073719,
+    "calificacion_lms_min": 0.019260985776782036,
+    "evt_quiz_attempted": 0.018796151503920555,
+    "navegador_principal": 0.01874866522848606,
+    "tasa_errores": 0.018533803522586823,
+    "dias_activos": 0.01828661747276783
+  },
+  "target_distribution": {
+    "en_riesgo": 1879,
+    "sin_riesgo": 2121
+  },
+  "dataset_shape": [
+    4000,
+    67
+  ],
+  "n_features": 66,
+  "train_size": 3200,
+  "test_size": 800
+}
