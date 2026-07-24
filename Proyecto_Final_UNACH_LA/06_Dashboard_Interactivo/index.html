@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNACH-LA | Learning Analytics Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-container">
+                <div class="logo-icon"></div>
+                <h2>UNACH-LA</h2>
+            </div>
+            <p class="subtitle">Learning Analytics</p>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active">
+                    <span class="icon">📊</span>
+                    Vista General
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="icon">🔴</span>
+                    Alertas Críticas
+                </a>
+                <a href="#" class="nav-item">
+                    <span class="icon">📈</span>
+                    Rendimiento
+                </a>
+            </nav>
+
+            <div class="system-status">
+                <div class="status-indicator"></div>
+                <span>Motor ML Activo</span>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <div class="header-titles">
+                    <h1>Dashboard Institucional</h1>
+                    <p id="fecha-calculo">Última actualización: Cargando...</p>
+                </div>
+                <div class="profile">
+                    <img src="https://ui-avatars.com/api/?name=Admin+UNACH&background=0D8ABC&color=fff" alt="User Profile" class="avatar">
+                </div>
+            </header>
+
+            <!-- KPIs Section -->
+            <section class="kpis-grid" id="kpi-container">
+                <!-- KPIs will be injected here via JS -->
+                <div class="kpi-card loading">Cargando KPIs...</div>
+            </section>
+
+            <!-- Charts and Tables -->
+            <section class="content-grid">
+                <!-- Left: Chart -->
+                <div class="glass-panel chart-container">
+                    <h3>Distribución de Riesgo Académico</h3>
+                    <canvas id="riesgoChart"></canvas>
+                </div>
+
+                <!-- Right: Alerts Table -->
+                <div class="glass-panel alerts-container">
+                    <h3>Estudiantes en Riesgo (Top Prioridad)</h3>
+                    <div class="table-wrapper">
+                        <table id="alerts-table">
+                            <thead>
+                                <tr>
+                                    <th>ID Estudiante</th>
+                                    <th>Riesgo ML</th>
+                                    <th>Semáforo</th>
+                                    <th>Acción Recomendada</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Alerts will be injected here via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
