@@ -1,14 +1,34 @@
 import React, { useState } from 'react';
 import AIPlanModal from './AIPlanModal';
 import StudentProfileModal from './StudentProfileModal';
-import { Sparkles, User } from 'lucide-react';
+import CompareStudentsModal from './CompareStudentsModal';
+import { Sparkles, User, GitCompare } from 'lucide-react';
 
 export default function AlertsTable({ data }) {
   const [isAIModalOpen, setIsAIModalOpen] = useState(false);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  const [isCompareModalOpen, setIsCompareModalOpen] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedForComparison, setSelectedForComparison] = useState([]);
 
   const topAlerts = data.slice(0, 15);
+
+  const handleCheckboxChange = (student) => {
+    setSelectedForComparison(prev => {
+      if (prev.find(s => s.id_estudiante === student.id_estudiante)) {
+        return prev.filter(s => s.id_estudiante !== student.id_estudiante);
+      } else {
+        if (prev.length < 2) return [...prev, student];
+        return prev; // Max 2
+      }
+    });
+  };
+
+  const handleOpenCompare = () => {
+    if (selectedForComparison.length === 2) {
+      setIsCompareModalOpen(true);
+    }
+  };
 
   const handleOpenAIPlan = (student) => {
     setSelectedStudent(student);
@@ -22,12 +42,25 @@ export default function AlertsTable({ data }) {
 
   return (
     <>
-      <div className="glass-panel">
-        <h3 className="panel-title">Estudiantes en Riesgo Crítico (Top Prioridad)</h3>
+      <div className="glass-panel" style={{ position: 'relative' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <h3 className="panel-title">Estudiantes en Riesgo Crítico (Top Prioridad)</h3>
+          
+          {selectedForComparison.length === 2 && (
+            <button 
+              onClick={handleOpenCompare}
+              className="btn-ai-sparkle fade-in" 
+              style={{ background: 'var(--accent-gradient)', color: 'white', padding: '0.5rem 1rem' }}
+            >
+              <GitCompare size={16} /> Comparar Estudiantes (A/B)
+            </button>
+          )}
+        </div>
         <div className="table-container">
           <table>
             <thead>
               <tr>
+                <th style={{ width: '40px' }}></th>
                 <th>ID Estudiante</th>
                 <th>Riesgo ML</th>
                 <th>Semáforo</th>
@@ -46,7 +79,17 @@ export default function AlertsTable({ data }) {
                 if (alerta.nivel_riesgo === 'MEDIO') badge = 'badge-yellow';
 
                 return (
-                  <tr key={index}>
+                  <tr key={index} style={{ background: selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante) ? 'rgba(2, 132, 199, 0.05)' : '' }}>
+                    <td>
+                      <input 
+                        type="checkbox" 
+                        checked={!!selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante)}
+                        onChange={() => handleCheckboxChange(alerta)}
+                        disabled={selectedForComparison.length >= 2 && !selectedForComparison.find(s => s.id_estudiante === alerta.id_estudiante)}
+                        style={{ cursor: 'pointer', transform: 'scale(1.2)' }}
+                        title="Seleccionar para comparar (Máx 2)"
+                      />
+                    </td>
                     <td>
                       <button 
                         onClick={() => handleOpenProfile(alerta)}
@@ -103,6 +146,12 @@ export default function AlertsTable({ data }) {
         isOpen={isProfileModalOpen}
         onClose={() => setIsProfileModalOpen(false)}
         studentData={selectedStudent}
+      />
+
+      <CompareStudentsModal
+        isOpen={isCompareModalOpen}
+        onClose={() => setIsCompareModalOpen(false)}
+        students={selectedForComparison}
       />
     </>
   );

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Bot, Sparkles, Printer, FileText } from 'lucide-react';
+import { X, Bot, Sparkles, Printer, FileText, Download } from 'lucide-react';
+import jsPDF from 'jspdf';
 
 export default function AIPlanModal({ isOpen, onClose, studentData }) {
   const [step, setStep] = useState(0); // 0: loading, 1: typing, 2: done
@@ -59,13 +60,30 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
     }
   }, [step, fullText]);
 
-  const handleExport = () => {
+  const handleExportTxt = () => {
     const element = document.createElement("a");
     const file = new Blob([fullText], {type: 'text/plain'});
     element.href = URL.createObjectURL(file);
     element.download = `Plan_Intervencion_${studentData?.id_estudiante || 'UNACH'}.txt`;
-    document.body.appendChild(element); // Required for this to work in FireFox
+    document.body.appendChild(element); 
     element.click();
+  };
+
+  const handleExportPDF = () => {
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(11);
+    
+    // Titulo
+    pdf.setFont("helvetica", "bold");
+    pdf.text(`Plan de Intervención IA - ID: ${studentData?.id_estudiante}`, 15, 20);
+    
+    pdf.setFont("helvetica", "normal");
+    // Dividir texto largo para que encaje en el PDF
+    const splitText = pdf.splitTextToSize(fullText, 180);
+    pdf.text(splitText, 15, 30);
+    
+    pdf.save(`Plan_IA_${studentData?.id_estudiante || 'UNACH'}.pdf`);
   };
 
   if (!isOpen) return null;
@@ -102,12 +120,15 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
 
         {/* Pie del Modal */}
         {step === 2 && (
-          <div className="ai-modal-footer fade-in">
+          <div className="ai-modal-footer fade-in" style={{ gap: '10px' }}>
             <button className="btn-secondary" onClick={onClose}>
               Cerrar
             </button>
-            <button className="btn-ai-action" onClick={handleExport}>
-              <FileText size={18} /> Exportar Plan (.txt)
+            <button className="btn-ai-action" onClick={handleExportTxt} style={{ background: 'var(--text-muted)' }}>
+              <FileText size={18} /> (.txt)
+            </button>
+            <button className="btn-ai-action" onClick={handleExportPDF}>
+              <Download size={18} /> Exportar PDF Oficial
             </button>
           </div>
         )}

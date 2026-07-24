@@ -1,12 +1,43 @@
-import React from 'react';
-import { X, UserCheck, AlertTriangle } from 'lucide-react';
+import React, { useRef } from 'react';
+import { X, UserCheck, AlertTriangle, Download } from 'lucide-react';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 import { Radar } from 'react-chartjs-2';
 import { Chart as ChartJS, RadialLinearScale, PointElement, LineElement, Filler, Tooltip as ChartTooltip, Legend } from 'chart.js';
 
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, ChartTooltip, Legend);
 
 export default function StudentProfileModal({ isOpen, onClose, studentData }) {
+  const modalRef = useRef(null);
+
   if (!isOpen || !studentData) return null;
+
+  const handleDownloadPDF = async () => {
+    if (!modalRef.current) return;
+    
+    // Ocultar botón de cierre durante captura
+    const closeBtn = modalRef.current.querySelector('.close-btn');
+    const downloadBtn = modalRef.current.querySelector('.download-pdf-btn');
+    if(closeBtn) closeBtn.style.display = 'none';
+    if(downloadBtn) downloadBtn.style.display = 'none';
+
+    try {
+      const canvas = await html2canvas(modalRef.current, { scale: 2 });
+      const imgData = canvas.toDataURL('image/png');
+      
+      const pdf = new jsPDF('l', 'mm', 'a4'); // Orientación horizontal
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      pdf.save(`Expediente_${studentData.id_estudiante}.pdf`);
+    } catch (error) {
+      console.error('Error generando PDF', error);
+    } finally {
+      if(closeBtn) closeBtn.style.display = 'block';
+      if(downloadBtn) downloadBtn.style.display = 'flex';
+    }
+  };
 
   const data = {
     labels: ['Asistencia', 'Notas Especialidad', 'Notas Generales', 'Participación', 'Cumplimiento Tareas', 'Interacción SICOA'],
@@ -53,7 +84,7 @@ export default function StudentProfileModal({ isOpen, onClose, studentData }) {
 
   return (
     <div className="modal-backdrop fade-in" onClick={onClose}>
-      <div className="ai-modal slide-up" onClick={e => e.stopPropagation()} style={{ maxWidth: '800px', flexDirection: 'row' }}>
+      <div className="ai-modal slide-up" onClick={e => e.stopPropagation()} style={{ maxWidth: '900px', flexDirection: 'row' }} ref={modalRef}>
         
         {/* Left Side: Info */}
         <div style={{ flex: 1, padding: '2rem', borderRight: '1px solid var(--glass-border)', background: 'rgba(0,0,0,0.2)' }}>
@@ -81,6 +112,14 @@ export default function StudentProfileModal({ isOpen, onClose, studentData }) {
               {studentData.accion_recomendada}
             </p>
           </div>
+
+          <button 
+            className="download-pdf-btn btn-ai-sparkle" 
+            onClick={handleDownloadPDF}
+            style={{ marginTop: '2rem', width: '100%', justifyContent: 'center', background: 'var(--text-main)', color: 'white' }}
+          >
+            <Download size={16} /> Exportar Expediente a PDF
+          </button>
         </div>
 
         {/* Right Side: Radar Chart */}
