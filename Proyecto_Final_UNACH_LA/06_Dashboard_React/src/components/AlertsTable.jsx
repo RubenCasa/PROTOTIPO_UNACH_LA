@@ -11,7 +11,7 @@ export default function AlertsTable({ data }) {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [selectedForComparison, setSelectedForComparison] = useState([]);
 
-  const topAlerts = data.slice(0, 15);
+  const topAlerts = data.slice(0, 100); // Muestra hasta 100 estudiantes con barra de scroll
 
   const handleCheckboxChange = (student, index) => {
     setSelectedForComparison(prev => {
