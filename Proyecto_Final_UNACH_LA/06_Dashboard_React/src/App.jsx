@@ -3,8 +3,12 @@ import Sidebar from './components/Sidebar';
 import KPIGrid from './components/KPIGrid';
 import RiskChart from './components/RiskChart';
 import AlertsTable from './components/AlertsTable';
+import AlertasView from './components/AlertasView';
+import RendimientoView from './components/RendimientoView';
+import MotorMLView from './components/MotorMLView';
 
 function App() {
+  const [activeTab, setActiveTab] = useState('general');
   const [kpiData, setKpiData] = useState(null);
   const [alertsData, setAlertsData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,30 +55,47 @@ function App() {
     );
   }
 
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'general':
+        return (
+          <>
+            <header className="header">
+              <div>
+                <h1>Dashboard Institucional</h1>
+                <p>Última actualización: {kpiData.metadata.fecha_calculo}</p>
+              </div>
+              <img 
+                src="https://ui-avatars.com/api/?name=Admin+UNACH&background=0D8ABC&color=fff" 
+                alt="Admin" 
+                className="avatar"
+              />
+            </header>
+            <section>
+              <KPIGrid data={kpiData.kpi_ejecutivos} />
+            </section>
+            <section className="content-grid">
+              <RiskChart data={alertsData.resumen_riesgo} />
+              <AlertsTable data={alertsData.top_alertas_prioritarias} />
+            </section>
+          </>
+        );
+      case 'alertas':
+        return <AlertasView data={alertsData.top_alertas_prioritarias} />;
+      case 'rendimiento':
+        return <RendimientoView kpis={kpiData.kpi_ejecutivos} />;
+      case 'motor':
+        return <MotorMLView />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <div className="dashboard-layout">
-      <Sidebar />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
       <main className="main-area">
-        <header className="header">
-          <div>
-            <h1>Dashboard Institucional</h1>
-            <p>Última actualización: {kpiData.metadata.fecha_calculo}</p>
-          </div>
-          <img 
-            src="https://ui-avatars.com/api/?name=Admin+UNACH&background=0D8ABC&color=fff" 
-            alt="Admin" 
-            className="avatar"
-          />
-        </header>
-
-        <section>
-          <KPIGrid data={kpiData.kpi_ejecutivos} />
-        </section>
-
-        <section className="content-grid">
-          <RiskChart data={alertsData.resumen_riesgo} />
-          <AlertsTable data={alertsData.top_alertas_prioritarias} />
-        </section>
+        {renderContent()}
       </main>
     </div>
   );
