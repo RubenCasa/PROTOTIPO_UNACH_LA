@@ -1,0 +1,38 @@
+{
+  "metadata": {
+    "fecha_calculo": "2026-07-10 13:57:02",
+    "total_registros": 4000
+  },
+  "kpi_ejecutivos": {
+    "KPI_01_Tasa_Riesgo_Academico": {
+      "nombre": "Tasa Global de Riesgo Académico",
+      "valor": 46.98,
+      "unidad": "%",
+      "meta_institucional": "< 25%",
+      "estado": "CRÍTICO"
+    },
+    "KPI_02_Promedio_General_Notas": {
+      "nombre": "Rendimiento Académico Promedio",
+      "valor": 7.16,
+      "unidad": "/ 10.0",
+      "meta_institucional": ">= 7.8",
+      "estado": "ADVERTENCIA"
+    },
+    "KPI_03_Asistencia_Promedio": {
+      "nombre": "Porcentaje Promedio de Asistencia",
+      "valor": 85.0,
+      "unidad": "%",
+      "meta_institucional": ">= 80%",
+      "estado": "ÓPTIMO"
+    },
+    "KPI_04_Efectividad_Modelo_ML": {
+      "nombre": "F1-Score Detección Alerta Temprana (XGBoost)",
+      "valor": 0.4952,
+      "unidad": "Score F1",
+      "meta_institucional": ">= 0.45",
+      "estado": "ÓPTIMO"
+    }
+  },
+  "desglose_por_carrera": {},
+  "desglose_socioeconomico": {}
+}
