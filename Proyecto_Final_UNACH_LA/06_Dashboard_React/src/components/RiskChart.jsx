@@ -34,7 +34,7 @@ export default function RiskChart({ data }) {
       legend: {
         position: 'bottom',
         labels: {
-          color: '#94a3b8',
+          color: '#64748b',
           padding: 20,
           font: {
             family: 'Inter',

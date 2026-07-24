@@ -40,14 +40,14 @@ export default function StudentProfileModal({ isOpen, onClose, studentData }) {
   const options = {
     scales: {
       r: {
-        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-        grid: { color: 'rgba(255, 255, 255, 0.1)' },
-        pointLabels: { color: '#94a3b8', font: { size: 12, family: 'Inter' } },
+        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
+        grid: { color: 'rgba(0, 0, 0, 0.1)' },
+        pointLabels: { color: '#64748b', font: { size: 12, family: 'Inter' } },
         ticks: { display: false, min: 0, max: 100 }
       }
     },
     plugins: {
-      legend: { labels: { color: '#f8fafc' } }
+      legend: { labels: { color: '#0f172a' } }
     }
   };
 
@@ -77,7 +77,7 @@ export default function StudentProfileModal({ isOpen, onClose, studentData }) {
 
           <div>
             <h4 style={{ color: 'var(--text-muted)', fontSize: '0.85rem', textTransform: 'uppercase', marginBottom: '0.5rem' }}>Acción Recomendada</h4>
-            <p style={{ fontSize: '0.9rem', lineHeight: '1.5', background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px' }}>
+            <p style={{ fontSize: '0.9rem', lineHeight: '1.5', background: 'rgba(0,0,0,0.03)', padding: '1rem', borderRadius: '8px' }}>
               {studentData.accion_recomendada}
             </p>
           </div>

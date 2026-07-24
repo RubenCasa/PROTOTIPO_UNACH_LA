@@ -41,24 +41,24 @@ export default function PredictionChart() {
     plugins: {
       legend: {
         position: 'top',
-        labels: { color: '#f8fafc' }
+        labels: { color: '#0f172a' }
       },
       tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        titleColor: '#f8fafc',
-        bodyColor: '#cbd5e1',
-        borderColor: 'rgba(255,255,255,0.1)',
+        backgroundColor: 'rgba(255, 255, 255, 0.9)',
+        titleColor: '#0f172a',
+        bodyColor: '#334155',
+        borderColor: 'rgba(0,0,0,0.1)',
         borderWidth: 1
       }
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#94a3b8' }
+        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+        ticks: { color: '#64748b' }
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#94a3b8' },
+        grid: { color: 'rgba(0, 0, 0, 0.05)' },
+        ticks: { color: '#64748b' },
         min: 0,
         max: 10
       }
