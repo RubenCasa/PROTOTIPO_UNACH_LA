@@ -59,7 +59,7 @@ function App() {
     switch (activeTab) {
       case 'general':
         return (
-          <>
+          <div className="fade-in">
             <header className="header">
               <div>
                 <h1>Dashboard Institucional</h1>
@@ -71,21 +71,21 @@ function App() {
                 className="avatar"
               />
             </header>
-            <section>
+            <section style={{ marginTop: '2.5rem' }}>
               <KPIGrid data={kpiData.kpi_ejecutivos} />
             </section>
-            <section className="content-grid">
+            <section className="content-grid" style={{ marginTop: '2.5rem' }}>
               <RiskChart data={alertsData.resumen_riesgo} />
               <AlertsTable data={alertsData.top_alertas_prioritarias} />
             </section>
-          </>
+          </div>
         );
       case 'alertas':
-        return <AlertasView data={alertsData.top_alertas_prioritarias} />;
+        return <div className="fade-in"><AlertasView data={alertsData.top_alertas_prioritarias} /></div>;
       case 'rendimiento':
-        return <RendimientoView kpis={kpiData.kpi_ejecutivos} />;
+        return <div className="fade-in"><RendimientoView kpis={kpiData.kpi_ejecutivos} /></div>;
       case 'motor':
-        return <MotorMLView />;
+        return <MotorMLView />; // Ya tiene fade-in interno
       default:
         return null;
     }

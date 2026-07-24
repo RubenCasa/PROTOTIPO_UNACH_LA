@@ -181,6 +181,12 @@ body {
   border-radius: 16px;
   padding: 1.5rem;
   box-shadow: var(--glass-shadow);
+  transition: all 0.3s ease;
+}
+
+.glass-panel:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 0 15px rgba(59, 130, 246, 0.15);
+  border-color: rgba(255, 255, 255, 0.15);
 }
 
 /* KPIs */
@@ -240,11 +246,24 @@ body {
   border-radius: 12px;
   font-weight: 600;
   font-size: 0.75rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-.badge-red { color: var(--status-red); background: var(--status-red-bg); }
-.badge-yellow { color: var(--status-yellow); background: var(--status-yellow-bg); }
-.badge-green { color: var(--status-green); background: var(--status-green-bg); }
+.badge-red { 
+  color: var(--status-red); 
+  background: var(--status-red-bg);
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.3);
+}
+.badge-yellow { 
+  color: var(--status-yellow); 
+  background: var(--status-yellow-bg);
+  box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
+}
+.badge-green { 
+  color: var(--status-green); 
+  background: var(--status-green-bg);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.3);
+}
 
 /* Content Grid */
 .content-grid {
@@ -327,4 +346,47 @@ tr:hover td {
   font-size: 1.5rem;
   color: var(--accent-blue);
   animation: pulse 1.5s infinite;
+}
+
+/* Tablas */
+tr {
+  transition: all 0.2s ease;
+}
+tr:hover {
+  transform: scale(1.01);
+  background: rgba(255, 255, 255, 0.03) !important;
+  box-shadow: inset 4px 0 0 var(--accent-blue);
+}
+
+tr:hover td {
+  background: transparent !important;
+}
+
+/* Animations */
+.fade-in {
+  animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-icon {
+  animation: pulseGlow 2s infinite;
+}
+
+@keyframes pulseGlow {
+  0% { filter: drop-shadow(0 0 2px rgba(59,130,246,0.2)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 15px rgba(59,130,246,0.6)); transform: scale(1.05); }
+  100% { filter: drop-shadow(0 0 2px rgba(59,130,246,0.2)); transform: scale(1); }
+}
+
+.slide-right {
+  animation: slideRight 2.5s cubic-bezier(0.1, 0.7, 1.0, 0.1) forwards;
+}
+
+@keyframes slideRight {
+  0% { width: 0%; }
+  100% { width: 100%; }
 }
