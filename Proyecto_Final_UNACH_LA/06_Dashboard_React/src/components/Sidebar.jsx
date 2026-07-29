@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard,
   Users,
   TrendingUp,
+  FileUp,
   ArrowLeft,
   GraduationCap,
   Activity
@@ -14,6 +14,7 @@ export default function Sidebar({ onBackToHero, activeSection, setActiveSection 
     { id: 'alertas', icon: Users, label: 'Todos los Estudiantes' },
     { id: 'rendimiento', icon: TrendingUp, label: 'Predicción Temporal' },
     { id: 'modelo', icon: Activity, label: 'Rendimiento ML' },
+    { id: 'import', icon: FileUp, label: 'Analista IA (Groq)' },
   ];
 
   return (

@@ -7,6 +7,7 @@ import AlertsTable from './components/AlertsTable';
 import PredictionChart from './components/PredictionChart';
 import MotorMLView from './components/MotorMLView';
 import ModelPerformanceView from './components/ModelPerformanceView';
+import ImportExportView from './components/ImportExportView';
 
 function App() {
   const [view, setView] = useState('hero'); // 'hero' | 'dashboard'
@@ -129,7 +130,11 @@ function App() {
         )}
 
         {/* Sección 5: Importación / IA (Groq) */}
-        {/* Sections removed to clean up the dashboard */}
+        {activeSection === 'import' && (
+          <section id="import" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
+            <ImportExportView />
+          </section>
+        )}
 
         <footer style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
           &copy; 2026 Universidad Nacional de Chimborazo (UNACH). Todos los derechos reservados.
