@@ -124,11 +124,7 @@ function App() {
     };
 
     const newAlertsData = {
-      resumen_riesgo: [
-        { nivel: "Alto", cantidad: riesgoAlto, color: "var(--status-red)" },
-        { nivel: "Medio", cantidad: riesgoMedio, color: "var(--status-yellow)" },
-        { nivel: "Bajo", cantidad: riesgoBajo, color: "var(--status-green)" }
-      ],
+      resumen_riesgo: { alto: riesgoAlto, medio: riesgoMedio, bajo: riesgoBajo },
       top_alertas_prioritarias: calculatedAlerts.slice(0, 100) // Top 100 to avoid freezing browser
     };
 
