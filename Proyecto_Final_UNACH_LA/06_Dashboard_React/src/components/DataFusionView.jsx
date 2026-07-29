@@ -14,7 +14,7 @@ import {
 import AIAnalysisPanel from './AIAnalysisPanel';
 import { fuseDatasets } from '../utils/dataFusion';
 
-export default function DataFusionView() {
+export default function DataFusionView({ onDataFused }) {
   const [dragActive, setDragActive] = useState(false);
   const [files, setFiles] = useState([]); // Array of { name: string, file: File, rows: Array, headers: Array }
   const [isFusing, setIsFusing] = useState(false);
@@ -158,7 +158,8 @@ Formato esperado:
         });
 
         if (!groqResponse.ok) {
-          throw new Error('Fallo al obtener la configuración de fusión desde la IA de Groq.');
+          const errData = await groqResponse.json().catch(() => ({}));
+          throw new Error(errData.error?.message || \`Error \${groqResponse.status} de Groq API (Fallback)\`);
         }
 
         const data = await groqResponse.json();
@@ -193,6 +194,10 @@ Formato esperado:
         rows: fusedRows,
         columns: fusedColumns
       });
+
+      if (onDataFused) {
+        onDataFused({ rows: fusedRows, columns: fusedColumns });
+      }
       
     } catch (error) {
       console.error(error);
