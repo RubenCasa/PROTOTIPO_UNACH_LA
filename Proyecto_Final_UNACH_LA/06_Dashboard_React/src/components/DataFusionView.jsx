@@ -159,7 +159,7 @@ Formato esperado:
 
         if (!groqResponse.ok) {
           const errData = await groqResponse.json().catch(() => ({}));
-          throw new Error(errData.error?.message || \`Error \${groqResponse.status} de Groq API (Fallback)\`);
+          throw new Error(errData.error?.message || `Error ${groqResponse.status} de Groq API (Fallback)`);
         }
 
         const data = await groqResponse.json();
