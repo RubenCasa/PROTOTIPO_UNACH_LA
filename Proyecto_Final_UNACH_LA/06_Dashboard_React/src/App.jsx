@@ -7,8 +7,6 @@ import AlertsTable from './components/AlertsTable';
 import PredictionChart from './components/PredictionChart';
 import MotorMLView from './components/MotorMLView';
 import ModelPerformanceView from './components/ModelPerformanceView';
-import ImportExportView from './components/ImportExportView';
-import IntegrationsView from './components/IntegrationsView';
 
 function App() {
   const [view, setView] = useState('hero'); // 'hero' | 'dashboard'
@@ -131,25 +129,7 @@ function App() {
         )}
 
         {/* Sección 5: Importación / IA (Groq) */}
-        {activeSection === 'import' && (
-          <section id="import" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
-            <ImportExportView />
-          </section>
-        )}
-
-        {/* Sección 6: Motor ML (SICOA) */}
-        {activeSection === 'motor' && (
-          <section id="motor" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
-            <MotorMLView />
-          </section>
-        )}
-
-        {/* Sección 7: Integraciones */}
-        {activeSection === 'integraciones' && (
-          <section id="integraciones" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
-            <IntegrationsView />
-          </section>
-        )}
+        {/* Sections removed to clean up the dashboard */}
 
         <footer style={{ textAlign: 'center', padding: '3rem 0', color: 'var(--text-muted)', fontSize: '0.85rem' }}>
           &copy; 2026 Universidad Nacional de Chimborazo (UNACH). Todos los derechos reservados.

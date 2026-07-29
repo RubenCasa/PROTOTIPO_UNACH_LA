@@ -13,16 +13,16 @@
   --unach-red-light: #f87171;
   --unach-red-dark: #991b1b;
 
-  /* Primary Palette */
-  --bg-primary: #0b1120;
-  --bg-secondary: #111827;
-  --bg-tertiary: #1e293b;
-  --surface: rgba(30, 41, 59, 0.6);
+  /* Primary Palette (Light Theme) */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --surface: rgba(255, 255, 255, 0.8);
 
-  --text-main: #f1f5f9;
-  --text-secondary: #cbd5e1;
+  --text-main: #0f172a;
+  --text-secondary: #334155;
   --text-muted: #64748b;
-  --text-accent: #38bdf8;
+  --text-accent: #0284c7;
 
   /* Accent Gradient */
   --accent-gradient: linear-gradient(135deg, #0ea5e9, #6366f1, #ec4899);
@@ -40,10 +40,10 @@
   --status-blue-bg: rgba(59, 130, 246, 0.12);
 
   /* Glass */
-  --glass-bg: rgba(17, 24, 39, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.06);
-  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-  --glass-hover-border: rgba(255, 255, 255, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(0, 0, 0, 0.08);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  --glass-hover-border: rgba(0, 0, 0, 0.15);
 
   /* Radius */
   --radius-sm: 8px;

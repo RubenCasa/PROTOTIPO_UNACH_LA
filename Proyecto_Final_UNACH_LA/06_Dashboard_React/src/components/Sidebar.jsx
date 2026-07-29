@@ -3,9 +3,6 @@ import {
   LayoutDashboard,
   Users,
   TrendingUp,
-  BrainCircuit,
-  FileUp,
-  Link2,
   ArrowLeft,
   GraduationCap,
   Activity
@@ -17,9 +14,6 @@ export default function Sidebar({ onBackToHero, activeSection, setActiveSection 
     { id: 'alertas', icon: Users, label: 'Todos los Estudiantes' },
     { id: 'rendimiento', icon: TrendingUp, label: 'Predicción Temporal' },
     { id: 'modelo', icon: Activity, label: 'Rendimiento ML' },
-    { id: 'import', icon: FileUp, label: 'Analista IA (Groq)' },
-    { id: 'motor', icon: BrainCircuit, label: 'Motor ML' },
-    { id: 'integraciones', icon: Link2, label: 'Integraciones' },
   ];
 
   return (
