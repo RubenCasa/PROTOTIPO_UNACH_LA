@@ -7,11 +7,11 @@ import AlertsTable from './components/AlertsTable';
 import PredictionChart from './components/PredictionChart';
 import MotorMLView from './components/MotorMLView';
 import ModelPerformanceView from './components/ModelPerformanceView';
-import ImportExportView from './components/ImportExportView';
+import DataFusionView from './components/DataFusionView';
 
 function App() {
   const [view, setView] = useState('hero'); // 'hero' | 'dashboard'
-  const [activeSection, setActiveSection] = useState('general');
+  const [activeSection, setActiveSection] = useState('fusion');
   const [kpiData, setKpiData] = useState(null);
   const [alertsData, setAlertsData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -129,10 +129,10 @@ function App() {
           </section>
         )}
 
-        {/* Sección 5: Importación / IA (Groq) */}
-        {activeSection === 'import' && (
-          <section id="import" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
-            <ImportExportView />
+        {/* Sección 5: Fusión Inteligente (Groq AI) */}
+        {activeSection === 'fusion' && (
+          <section id="fusion" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
+            <DataFusionView />
           </section>
         )}
 
