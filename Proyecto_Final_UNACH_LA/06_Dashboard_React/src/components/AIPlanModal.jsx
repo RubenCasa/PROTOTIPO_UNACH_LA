@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Bot, Sparkles, Printer, FileText, Download } from 'lucide-react';
+import { X, Bot, Sparkles, FileText, Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 
 export default function AIPlanModal({ isOpen, onClose, studentData }) {
@@ -15,27 +15,82 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
       setDisplayedText('');
       setFullText('');
       
-      // Intentar conectarse a la API Backend de Python
-      fetch('http://localhost:8000/api/generar-plan', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(studentData)
-      })
-      .then(res => {
-        if(!res.ok) throw new Error('API Error');
-        return res.json();
-      })
-      .then(data => {
-        setFullText(data.plan);
-        setStep(1);
-      })
-      .catch(err => {
-        // Fallback local si el backend no está corriendo (ej. Vercel)
-        setTimeout(() => {
-          setFullText(`[SISTEMA IA UNACH-LA: INFORME GENERATIVO (MODO VERCEL EDGE)]\nEvaluando al estudiante ID: ${studentData.id_estudiante} (Carrera: ${studentData.carrera})\nProbabilidad de Riesgo Predictiva: ${studentData.probabilidad_riesgo_ml}% (${studentData.nivel_riesgo})\n\n--- ANÁLISIS DE PATRONES DE RIESGO ---\nEl motor XGBoost ha identificado vulnerabilidades críticas en el desempeño actual del estudiante, ubicándolo en el semáforo '${studentData.semaforo}'. Se detectan posibles deficiencias latentes en:\n- Continuidad de asistencia en asignaturas de especialidad.\n- Participación activa en el Entorno Virtual de Aprendizaje (Moodle/SICOA).\n- Cumplimiento de entregables en las fechas estipuladas.\n\n--- PLAN ESTRATÉGICO DE INTERVENCIÓN A LA MEDIDA ---\n\nFase 1: Intervención Inmediata (24-48 horas)\n1. Convocatoria Diagnóstica: El Director de Carrera debe citar al estudiante presencialmente para identificar factores externos (socioeconómicos, familiares o de salud mental).\n2. Derivación a Bienestar Estudiantil: Evaluación urgente para determinar si aplica a becas de apoyo, alimentación o asistencia psicopedagógica.\n\nFase 2: Estrategia Académica y Acompañamiento (Próximos 15 días)\n3. Tutorías de Pares (Mentoría): Emparejar al estudiante con un compañero de alto rendimiento (utilizando el módulo A/B) para acompañamiento de estudio intensivo.\n4. Refuerzo Obligatorio: Inscripción automática en talleres de nivelación de materias críticas.\n5. Flexibilidad Condicionada: Acordar un cronograma de nivelación para trabajos atrasados, firmado como compromiso académico.\n\nFase 3: Monitoreo Continuo (Cierre de Parcial)\n6. Seguimiento Docente Activo: Alerta configurada en el SICOA para que los docentes reporten nuevas inasistencias de este estudiante en un máximo de 24 horas.\n7. Re-evaluación Predictiva: Correr nuevamente el modelo ML al finalizar el mes para medir la reducción porcentual de su nivel de riesgo.\n\n[Documento oficial emitido por el Motor Predictivo Institucional de la Universidad Nacional de Chimborazo (UNACH-LA)]`);
+      // Try API backend first, then Groq direct, then local fallback
+      const fetchPlan = async () => {
+        try {
+          // Try Vercel serverless or local backend
+          let text = null;
+
+          try {
+            const backendRes = await fetch('http://localhost:8000/api/generar-plan', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(studentData)
+            });
+            if (backendRes.ok) {
+              const data = await backendRes.json();
+              text = data.plan;
+            }
+          } catch {
+            // Backend not available
+          }
+
+          // Try Groq if backend failed
+          if (!text) {
+            try {
+              const groqKey = import.meta.env.VITE_GROQ_API_KEY || '';
+              if (groqKey) {
+                const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': `Bearer ${groqKey}`,
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    model: 'llama-3.3-70b-versatile',
+                    messages: [{
+                      role: 'system',
+                      content: 'Eres un experto en Learning Analytics de la UNACH. Genera planes de intervención académica detallados y profesionales en español.'
+                    }, {
+                      role: 'user',
+                      content: `Genera un plan de intervención para el estudiante:
+                      - ID: ${studentData.id_estudiante}
+                      - Carrera: ${studentData.carrera}
+                      - Probabilidad de riesgo: ${studentData.probabilidad_riesgo_ml}%
+                      - Nivel: ${studentData.nivel_riesgo}
+                      - Semáforo: ${studentData.semaforo}
+                      
+                      Incluye: análisis de patrones de riesgo, plan estratégico en 3 fases (inmediata, académica, monitoreo), y acciones específicas para el SICOA y Moodle.`
+                    }],
+                    temperature: 0.7,
+                    max_tokens: 1500,
+                  }),
+                });
+                if (groqRes.ok) {
+                  const groqData = await groqRes.json();
+                  text = groqData.choices[0].message.content;
+                }
+              }
+            } catch {
+              // Groq not available
+            }
+          }
+
+          // Fallback local
+          if (!text) {
+            text = `[SISTEMA IA UNACH-LA: INFORME GENERATIVO]\nEvaluando al estudiante ID: ${studentData.id_estudiante} (Carrera: ${studentData.carrera})\nProbabilidad de Riesgo Predictiva: ${studentData.probabilidad_riesgo_ml}% (${studentData.nivel_riesgo})\n\n--- ANÁLISIS DE PATRONES DE RIESGO ---\nEl motor XGBoost ha identificado vulnerabilidades críticas en el desempeño actual del estudiante, ubicándolo en el semáforo '${studentData.semaforo}'.\n\n--- PLAN ESTRATÉGICO DE INTERVENCIÓN ---\n\nFase 1: Intervención Inmediata (24-48 horas)\n1. Convocatoria Diagnóstica: Citar al estudiante presencialmente.\n2. Derivación a Bienestar Estudiantil.\n\nFase 2: Estrategia Académica (Próximos 15 días)\n3. Tutorías de Pares (Mentoría).\n4. Refuerzo Obligatorio en materias críticas.\n5. Flexibilidad Condicionada.\n\nFase 3: Monitoreo Continuo (Cierre de Parcial)\n6. Seguimiento Docente Activo en SICOA.\n7. Re-evaluación Predictiva con modelo ML.\n\n[Documento oficial — Motor Predictivo UNACH-LA]`;
+          }
+
+          setFullText(text);
           setStep(1);
-        }, 1500);
-      });
+        } catch {
+          // Ultimate fallback
+          setFullText('Error al generar el plan. Intente nuevamente.');
+          setStep(1);
+        }
+      };
+
+      fetchPlan();
     }
   }, [isOpen, studentData]);
 
@@ -45,17 +100,14 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
       const intervalId = setInterval(() => {
         setDisplayedText(fullText.slice(0, i));
         i++;
-        
         if (textContainerRef.current) {
           textContainerRef.current.scrollTop = textContainerRef.current.scrollHeight;
         }
-
         if (i > fullText.length) {
           clearInterval(intervalId);
           setStep(2);
         }
-      }, 20);
-      
+      }, 15);
       return () => clearInterval(intervalId);
     }
   }, [step, fullText]);
@@ -71,18 +123,13 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
 
   const handleExportPDF = () => {
     const pdf = new jsPDF('p', 'mm', 'a4');
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(11);
-    
-    // Titulo
     pdf.setFont("helvetica", "bold");
-    pdf.text(`Plan de Intervención IA - ID: ${studentData?.id_estudiante}`, 15, 20);
-    
+    pdf.setFontSize(13);
+    pdf.text(`Plan de Intervención IA — ${studentData?.id_estudiante}`, 15, 20);
     pdf.setFont("helvetica", "normal");
-    // Dividir texto largo para que encaje en el PDF
+    pdf.setFontSize(10);
     const splitText = pdf.splitTextToSize(fullText, 180);
-    pdf.text(splitText, 15, 30);
-    
+    pdf.text(splitText, 15, 32);
     pdf.save(`Plan_IA_${studentData?.id_estudiante || 'UNACH'}.pdf`);
   };
 
@@ -92,21 +139,19 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
     <div className="modal-backdrop fade-in" onClick={onClose}>
       <div className="ai-modal slide-up" onClick={e => e.stopPropagation()}>
         
-        {/* Cabecera del Modal */}
         <div className="ai-modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Bot size={28} color="var(--accent-purple)" />
-            <h2 style={{ fontSize: '1.2rem', margin: 0 }}>Generador de Planes IA</h2>
+            <Bot size={26} color="#8b5cf6" />
+            <h2 style={{ fontSize: '1.1rem', margin: 0 }}>Generador de Planes IA</h2>
           </div>
-          <button className="close-btn" onClick={onClose}><X size={24} /></button>
+          <button className="close-btn" onClick={onClose}><X size={22} /></button>
         </div>
 
-        {/* Cuerpo del Modal */}
         <div className="ai-modal-body">
           {step === 0 && (
             <div className="ai-loading">
-              <Sparkles size={48} className="pulse-icon" color="var(--accent-purple)" />
-              <p>Analizando datos del estudiante y entrenando plan óptimo...</p>
+              <Sparkles size={44} className="pulse-icon" color="#8b5cf6" />
+              <p>Conectando con Groq IA... Generando plan óptimo...</p>
             </div>
           )}
 
@@ -118,17 +163,14 @@ export default function AIPlanModal({ isOpen, onClose, studentData }) {
           )}
         </div>
 
-        {/* Pie del Modal */}
         {step === 2 && (
-          <div className="ai-modal-footer fade-in" style={{ gap: '10px' }}>
-            <button className="btn-secondary" onClick={onClose}>
-              Cerrar
-            </button>
-            <button className="btn-ai-action" onClick={handleExportTxt} style={{ background: 'var(--text-muted)' }}>
-              <FileText size={18} /> (.txt)
+          <div className="ai-modal-footer fade-in">
+            <button className="btn-secondary" onClick={onClose}>Cerrar</button>
+            <button className="btn-ai-action" onClick={handleExportTxt} style={{ background: 'var(--bg-tertiary)' }}>
+              <FileText size={16} /> .txt
             </button>
             <button className="btn-ai-action" onClick={handleExportPDF}>
-              <Download size={18} /> Exportar PDF Oficial
+              <Download size={16} /> PDF Oficial
             </button>
           </div>
         )}

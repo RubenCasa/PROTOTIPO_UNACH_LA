@@ -1,7 +1,10 @@
 {
   "metadata": {
-    "fecha_calculo": "2026-07-10 13:57:02",
-    "total_registros": 4000
+    "fecha_calculo": "2026-07-29 15:08:41",
+    "total_registros": 4000,
+    "version_modelo": "v2.0 — Regularizado",
+    "features_usadas": 30,
+    "features_nuevas": 4
   },
   "kpi_ejecutivos": {
     "KPI_01_Tasa_Riesgo_Academico": {
@@ -26,10 +29,17 @@
       "estado": "ÓPTIMO"
     },
     "KPI_04_Efectividad_Modelo_ML": {
-      "nombre": "F1-Score Detección Alerta Temprana (XGBoost)",
-      "valor": 0.4952,
+      "nombre": "F1-Score Detección Alerta Temprana (XGBoost v2)",
+      "valor": 0.4198,
       "unidad": "Score F1",
-      "meta_institucional": ">= 0.45",
+      "meta_institucional": ">= 0.40",
+      "estado": "ÓPTIMO"
+    },
+    "KPI_05_Overfitting_Control": {
+      "nombre": "Gap de Generalización (Train vs Test)",
+      "valor": 1.2,
+      "unidad": "%",
+      "meta_institucional": "< 10%",
       "estado": "ÓPTIMO"
     }
   },

@@ -60,6 +60,18 @@ class PrototipoUNACHLA:
                      'id_estudiante', 'codigo_asignatura']
         X = df.drop(columns=[c for c in leak_cols if c in df.columns])
         
+        # Eliminar features ruidosas
+        noise_cols = ['navegador_principal', 'dispositivo_principal', 'so_principal',
+                      'asignaturas_lms', 'comp_curso', 'comp_archivo_pdf']
+        X = X.drop(columns=[c for c in noise_cols if c in X.columns])
+        
+        # Feature Engineering avanzado
+        total_aprobadas = X['aprobadas_1ra'] + X['aprobadas_2da'] + X['aprobadas_3ra']
+        X['ratio_aprobadas_total'] = np.where(total_aprobadas > 0, X['aprobadas_1ra'] / total_aprobadas, 0.0)
+        X['es_repetidor'] = (X['matriculas_asignatura'] > 1).astype(int)
+        X['tiene_retiros'] = (X['num_retiros'] > 0).astype(int)
+        X['riesgo_historico'] = (X['num_retiros'] * 2 + X['num_reingresos'] * 1.5 + X['aprobadas_2da'] * 0.5 + X['aprobadas_3ra'] * 1.0)
+        
         # Codificación
         cat_cols = X.select_dtypes(include=['object', 'category']).columns.tolist()
         for col in cat_cols:
@@ -71,7 +83,9 @@ class PrototipoUNACHLA:
         self.feature_names = X.columns.tolist()
         
         self.modelo = XGBClassifier(
-            n_estimators=200, max_depth=6, learning_rate=0.1,
+            n_estimators=300, max_depth=3, learning_rate=0.05,
+            min_child_weight=5, subsample=0.8, colsample_bytree=0.7,
+            reg_alpha=1.0, reg_lambda=5.0, gamma=0.3,
             random_state=SEED, eval_metric='logloss'
         )
         self.modelo.fit(X, y)
@@ -109,6 +123,17 @@ class PrototipoUNACHLA:
                      'modalidad_titulacion', 'num_matriculas_titulacion',
                      'id_estudiante', 'codigo_asignatura']
         
+        # Eliminar features ruidosas (mismo que entrenamiento)
+        noise_cols = ['navegador_principal', 'dispositivo_principal', 'so_principal',
+                      'asignaturas_lms', 'comp_curso', 'comp_archivo_pdf']
+        
+        # Feature Engineering avanzado (mismo que entrenamiento)
+        total_aprobadas = X_eval['aprobadas_1ra'] + X_eval['aprobadas_2da'] + X_eval['aprobadas_3ra']
+        X_eval['ratio_aprobadas_total'] = np.where(total_aprobadas > 0, X_eval['aprobadas_1ra'] / total_aprobadas, 0.0)
+        X_eval['es_repetidor'] = (X_eval['matriculas_asignatura'] > 1).astype(int)
+        X_eval['tiene_retiros'] = (X_eval['num_retiros'] > 0).astype(int)
+        X_eval['riesgo_historico'] = (X_eval['num_retiros'] * 2 + X_eval['num_reingresos'] * 1.5 + X_eval['aprobadas_2da'] * 0.5 + X_eval['aprobadas_3ra'] * 1.0)
+        
         for col in self.encoders:
             if col in X_eval.columns:
                 le = self.encoders[col]
@@ -116,8 +141,14 @@ class PrototipoUNACHLA:
                     lambda s: le.transform([s])[0] if s in le.classes_ else 0
                 )
                 
-        X_eval = X_eval.drop(columns=[c for c in leak_cols if c in X_eval.columns])
+        X_eval = X_eval.drop(columns=[c for c in leak_cols + noise_cols if c in X_eval.columns])
         X_eval = X_eval.fillna(X_eval.median())
+        
+        # Asegurar que solo las features del entrenamiento se usen
+        for feat in self.feature_names:
+            if feat not in X_eval.columns:
+                X_eval[feat] = 0
+        X_eval = X_eval[self.feature_names]
         
         probs = self.modelo.predict_proba(X_eval)[:, 1]
         

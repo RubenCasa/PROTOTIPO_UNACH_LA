@@ -32,6 +32,7 @@ from sklearn.model_selection import (
     cross_validate, learning_curve
 )
 from sklearn.preprocessing import StandardScaler, LabelEncoder
+from sklearn.feature_selection import SelectKBest, mutual_info_classif
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
@@ -52,7 +53,7 @@ warnings.filterwarnings('ignore')
 # =============================================================================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
-DATASET_FILE = os.path.join(PROJECT_DIR, "Diseño e Implementación ML", "dataset_procesado.csv")
+DATASET_FILE = os.path.join(PROJECT_DIR, "01_Diseno_e_Implementacion_ML", "dataset_procesado.csv")
 GRAFICOS_DIR = os.path.join(BASE_DIR, "graficos")
 RESULTADOS_JSON = os.path.join(BASE_DIR, "resultados_evaluacion.json")
 REPORTE_FILE = os.path.join(BASE_DIR, "reporte_evaluacion.md")
@@ -128,6 +129,13 @@ def paso1_cargar_y_preparar():
         if col in df.columns:
             df = df.drop(columns=[col])
 
+    # Eliminar features ruidosas (bajo poder predictivo o irrelevantes)
+    noise_cols = ['navegador_principal', 'dispositivo_principal', 'so_principal',
+                  'asignaturas_lms', 'comp_curso', 'comp_archivo_pdf']
+    noise_presentes = [c for c in noise_cols if c in df.columns]
+    df = df.drop(columns=noise_presentes)
+    print_step(f"Features ruidosas eliminadas ({len(noise_presentes)}): {noise_presentes}")
+
     # Separar X, y
     y = df['en_riesgo']
     X = df.drop(columns=['en_riesgo'])
@@ -145,6 +153,19 @@ def paso1_cargar_y_preparar():
     if nan_count > 0:
         X = X.fillna(X.median())
         print_step(f"NaN imputados con mediana: {nan_count} valores")
+
+    # Feature Selection con SelectKBest (mutual information)
+    print_step("Aplicando SelectKBest (mutual_info_classif)...")
+    n_features_target = min(30, X.shape[1])
+    selector = SelectKBest(score_func=mutual_info_classif, k=n_features_target)
+    X_selected = selector.fit_transform(X, y)
+    selected_mask = selector.get_support()
+    selected_features = X.columns[selected_mask].tolist()
+    eliminated_features = X.columns[~selected_mask].tolist()
+    X = pd.DataFrame(X_selected, columns=selected_features, index=X.index)
+    print_step(f"Features seleccionadas: {len(selected_features)} de {len(selected_mask)}")
+    if eliminated_features:
+        print_step(f"Features eliminadas por baja información: {eliminated_features}")
 
     # Split train/test
     X_train, X_test, y_train, y_test = train_test_split(
@@ -177,22 +198,26 @@ def paso2_entrenar_con_cv(X_train_scaled, X_train, y_train):
 
     modelos = {
         'Logistic Regression': LogisticRegression(
-            max_iter=1000, random_state=SEED, C=1.0
+            max_iter=1000, random_state=SEED, C=0.1, penalty='l2'
         ),
         'Decision Tree': DecisionTreeClassifier(
-            max_depth=10, min_samples_split=10, random_state=SEED
+            max_depth=4, min_samples_split=30, min_samples_leaf=15,
+            random_state=SEED
         ),
         'Random Forest': RandomForestClassifier(
-            n_estimators=200, max_depth=15, min_samples_split=5,
+            n_estimators=300, max_depth=5, min_samples_split=20,
+            min_samples_leaf=10, max_features='sqrt',
             random_state=SEED, n_jobs=-1
         ),
         'XGBoost': XGBClassifier(
-            n_estimators=200, max_depth=6, learning_rate=0.1,
+            n_estimators=300, max_depth=3, learning_rate=0.05,
+            min_child_weight=5, subsample=0.8, colsample_bytree=0.7,
+            reg_alpha=1.0, reg_lambda=5.0, gamma=0.3,
             random_state=SEED, eval_metric='logloss',
             use_label_encoder=False, verbosity=0
         ),
         'SVM': SVC(
-            kernel='rbf', C=1.0, gamma='scale',
+            kernel='rbf', C=0.5, gamma='scale',
             probability=True, random_state=SEED
         ),
     }

@@ -289,6 +289,102 @@ def merge_datasets(df_sicoa, df_features_lms):
 
 
 # ============================================================================
+# PASO 4B: FEATURE ENGINEERING AVANZADO (POST-MERGE)
+# ============================================================================
+def feature_engineering_avanzado(df):
+    """
+    Genera features derivadas que combinan información académica (SICOA)
+    con comportamiento digital (LMS) para mejorar la capacidad predictiva.
+    """
+    print_section("PASO 4B: FEATURE ENGINEERING AVANZADO")
+
+    n_features_antes = df.shape[1]
+
+    # 1. Ratio de aprobación a la primera vez
+    total_aprobadas = df['aprobadas_1ra'] + df['aprobadas_2da'] + df['aprobadas_3ra']
+    df['ratio_aprobadas_total'] = np.where(
+        total_aprobadas > 0,
+        df['aprobadas_1ra'] / total_aprobadas,
+        0.0
+    )
+    print_step("ratio_aprobadas_total: eficiencia de aprobación en 1ra matrícula")
+
+    # 2. Engagement score (compuesto normalizado)
+    # Normalización min-max de cada componente antes de combinar
+    def safe_minmax(series):
+        smin, smax = series.min(), series.max()
+        return (series - smin) / (smax - smin) if smax > smin else 0.0
+
+    df['engagement_score'] = (
+        safe_minmax(df['total_eventos']) * 0.3 +
+        safe_minmax(df['dias_activos']) * 0.3 +
+        safe_minmax(df['total_sesiones']) * 0.2 +
+        safe_minmax(df['tiempo_conexion_total_min']) * 0.2
+    ).round(4)
+    print_step("engagement_score: indicador compuesto de participación LMS")
+
+    # 3. Tasa de entrega de tareas
+    denom_entrega = df['evt_assignment_submitted'] + df['evt_assignment_viewed']
+    df['tasa_entrega'] = np.where(
+        denom_entrega > 0,
+        df['evt_assignment_submitted'] / denom_entrega,
+        0.0
+    ).round(4)
+    print_step("tasa_entrega: proporción de tareas entregadas vs solo vistas")
+
+    # 4. Tasa de quizzes completados
+    df['tasa_quiz_completado'] = np.where(
+        df['evt_quiz_attempted'] > 0,
+        df['evt_quiz_submitted'] / df['evt_quiz_attempted'],
+        0.0
+    ).round(4)
+    print_step("tasa_quiz_completado: proporción de quizzes terminados vs iniciados")
+
+    # 5. Intensidad de participación en foros
+    df['intensidad_foro'] = np.where(
+        df['total_eventos'] > 0,
+        (df['evt_forum_post'] + df['evt_forum_viewed']) / df['total_eventos'],
+        0.0
+    ).round(4)
+    print_step("intensidad_foro: proporción de actividad en foros")
+
+    # 6. Rango de calificaciones LMS
+    df['calificacion_lms_rango'] = (df['calificacion_lms_max'] - df['calificacion_lms_min']).round(4)
+    print_step("calificacion_lms_rango: variabilidad en calificaciones LMS")
+
+    # 7. Minutos por día activo (concentración del estudio)
+    df['minutos_por_dia_activo'] = np.where(
+        df['dias_activos'] > 0,
+        df['tiempo_conexion_total_min'] / df['dias_activos'],
+        0.0
+    ).round(2)
+    print_step("minutos_por_dia_activo: intensidad de estudio por sesión")
+
+    # 8. Flag de repetidor
+    df['es_repetidor'] = (df['matriculas_asignatura'] > 1).astype(int)
+    print_step(f"es_repetidor: {df['es_repetidor'].sum()} estudiantes repitiendo")
+
+    # 9. Flag de retiros previos
+    df['tiene_retiros'] = (df['num_retiros'] > 0).astype(int)
+    print_step(f"tiene_retiros: {df['tiene_retiros'].sum()} con retiros previos")
+
+    # 10. Score de riesgo histórico acumulado
+    df['riesgo_historico'] = (
+        df['num_retiros'] * 2 +
+        df['num_reingresos'] * 1.5 +
+        df['aprobadas_2da'] * 0.5 +
+        df['aprobadas_3ra'] * 1.0
+    ).round(2)
+    print_step("riesgo_historico: score compuesto de historial de riesgo")
+
+    n_features_nuevas = df.shape[1] - n_features_antes
+    print_step(f"Features nuevas generadas: {n_features_nuevas}")
+    print_step(f"Shape final con features avanzadas: {df.shape}")
+
+    return df
+
+
+# ============================================================================
 # PASO 5: EXPORTACION Y DOCUMENTACION
 # ============================================================================
 def exportar_dataset(df, reporte_antes):
@@ -518,6 +614,9 @@ def main():
 
     # --- Paso 4: Merge ---
     df_final = merge_datasets(sicoa_limpio, features_lms)
+
+    # --- Paso 4B: Feature Engineering Avanzado ---
+    df_final = feature_engineering_avanzado(df_final)
 
     # --- Paso 5: Exportacion ---
     df_final = exportar_dataset(df_final, reporte_antes)

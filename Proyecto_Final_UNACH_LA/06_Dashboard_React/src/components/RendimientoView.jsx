@@ -5,22 +5,18 @@ import { TrendingUp } from 'lucide-react';
 
 export default function RendimientoView({ kpis }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
       <div className="header">
         <div>
-          <h1 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <TrendingUp color="var(--status-yellow)" />
+          <h1>
+            <TrendingUp size={24} color="var(--status-yellow)" style={{ marginRight: 10 }} />
             Rendimiento Académico
           </h1>
-          <p>Análisis de métricas institucionales y comportamiento del estudiante.</p>
+          <p>Análisis de métricas institucionales y proyección del rendimiento estudiantil.</p>
         </div>
       </div>
-      
       <KPIGrid data={kpis} />
-      
-      {/* Gráfica de Proyección Lineal */}
       <PredictionChart />
-      
     </div>
   );
 }

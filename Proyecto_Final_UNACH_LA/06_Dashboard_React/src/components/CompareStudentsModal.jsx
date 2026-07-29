@@ -14,7 +14,7 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
     labels: ['Asistencia', 'Notas Especialidad', 'Notas Generales', 'Participación', 'Cumplimiento Tareas', 'Interacción SICOA'],
     datasets: [
       {
-        label: `Estudiante A: ${studentA.id_estudiante}`,
+        label: `A: ${studentA.id_estudiante}`,
         data: [
           Math.floor(Math.random() * 40) + 40,
           Math.floor(Math.random() * 40) + 40,
@@ -23,13 +23,13 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
           Math.floor(Math.random() * 40) + 60,
           Math.floor(Math.random() * 40) + 40,
         ],
-        backgroundColor: 'rgba(2, 132, 199, 0.2)', // UNACH Blue
-        borderColor: 'rgba(2, 132, 199, 1)',
+        backgroundColor: 'rgba(14, 165, 233, 0.15)',
+        borderColor: 'rgba(14, 165, 233, 1)',
         borderWidth: 2,
-        pointBackgroundColor: 'rgba(2, 132, 199, 1)',
+        pointBackgroundColor: 'rgba(14, 165, 233, 1)',
       },
       {
-        label: `Estudiante B: ${studentB.id_estudiante}`,
+        label: `B: ${studentB.id_estudiante}`,
         data: [
           Math.floor(Math.random() * 40) + 40,
           Math.floor(Math.random() * 40) + 40,
@@ -38,10 +38,10 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
           Math.floor(Math.random() * 40) + 60,
           Math.floor(Math.random() * 40) + 40,
         ],
-        backgroundColor: 'rgba(225, 29, 72, 0.2)', // UNACH Red
-        borderColor: 'rgba(225, 29, 72, 1)',
+        backgroundColor: 'rgba(236, 72, 153, 0.15)',
+        borderColor: 'rgba(236, 72, 153, 1)',
         borderWidth: 2,
-        pointBackgroundColor: 'rgba(225, 29, 72, 1)',
+        pointBackgroundColor: 'rgba(236, 72, 153, 1)',
       }
     ],
   };
@@ -49,14 +49,14 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
   const options = {
     scales: {
       r: {
-        angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
-        grid: { color: 'rgba(0, 0, 0, 0.1)' },
-        pointLabels: { color: '#64748b', font: { size: 12, family: 'Inter' } },
+        angleLines: { color: 'rgba(255, 255, 255, 0.06)' },
+        grid: { color: 'rgba(255, 255, 255, 0.06)' },
+        pointLabels: { color: '#94a3b8', font: { size: 11, family: 'Inter' } },
         ticks: { display: false, min: 0, max: 100 }
       }
     },
     plugins: {
-      legend: { labels: { color: '#0f172a' }, position: 'bottom' }
+      legend: { labels: { color: '#cbd5e1', font: { family: 'Inter' } }, position: 'bottom' }
     }
   };
 
@@ -64,43 +64,40 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
     <div className="modal-backdrop fade-in" onClick={onClose}>
       <div className="ai-modal slide-up" onClick={e => e.stopPropagation()} style={{ maxWidth: '800px', flexDirection: 'column' }}>
         
-        <div className="ai-modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="ai-modal-header">
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <Users color="var(--accent-blue)" />
-            <h3 style={{ margin: 0, color: 'var(--text-main)' }}>A/B Testing: Comparativa Académica</h3>
+            <Users color="var(--text-accent)" />
+            <h3 style={{ margin: 0 }}>A/B Testing: Comparativa Académica</h3>
           </div>
-          <button className="close-btn" onClick={onClose}><X size={24} /></button>
+          <button className="close-btn" onClick={onClose}><X size={22} /></button>
         </div>
 
         <div style={{ display: 'flex', flex: 1 }}>
-          <div style={{ flex: 1, padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', borderRight: '1px solid var(--glass-border)' }}>
+          <div style={{ flex: 1, padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1rem', borderRight: '1px solid var(--glass-border)' }}>
             
-            {/* Student A Details */}
-            <div style={{ padding: '1rem', background: 'rgba(2, 132, 199, 0.05)', borderRadius: '8px', borderLeft: '4px solid rgba(2, 132, 199, 1)' }}>
-              <h4 style={{ color: 'rgba(2, 132, 199, 1)', margin: '0 0 0.5rem 0' }}>{studentA.id_estudiante}</h4>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>{studentA.carrera}</p>
-              <div style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>Riesgo: {studentA.probabilidad_riesgo_ml}% ({studentA.nivel_riesgo})</div>
+            <div style={{ padding: '1rem', background: 'rgba(14, 165, 233, 0.05)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid rgba(14, 165, 233, 1)' }}>
+              <h4 style={{ color: 'rgba(14, 165, 233, 1)', margin: '0 0 0.3rem 0', fontSize: '0.95rem' }}>{studentA.id_estudiante}</h4>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{studentA.carrera}</p>
+              <div style={{ marginTop: '0.4rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Riesgo: {studentA.probabilidad_riesgo_ml}% ({studentA.nivel_riesgo})</div>
             </div>
 
-            {/* Student B Details */}
-            <div style={{ padding: '1rem', background: 'rgba(225, 29, 72, 0.05)', borderRadius: '8px', borderLeft: '4px solid rgba(225, 29, 72, 1)' }}>
-              <h4 style={{ color: 'rgba(225, 29, 72, 1)', margin: '0 0 0.5rem 0' }}>{studentB.id_estudiante}</h4>
-              <p style={{ margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)' }}>{studentB.carrera}</p>
-              <div style={{ marginTop: '0.5rem', fontWeight: 'bold' }}>Riesgo: {studentB.probabilidad_riesgo_ml}% ({studentB.nivel_riesgo})</div>
+            <div style={{ padding: '1rem', background: 'rgba(236, 72, 153, 0.05)', borderRadius: 'var(--radius-sm)', borderLeft: '3px solid rgba(236, 72, 153, 1)' }}>
+              <h4 style={{ color: 'rgba(236, 72, 153, 1)', margin: '0 0 0.3rem 0', fontSize: '0.95rem' }}>{studentB.id_estudiante}</h4>
+              <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>{studentB.carrera}</p>
+              <div style={{ marginTop: '0.4rem', fontWeight: 'bold', fontSize: '0.9rem' }}>Riesgo: {studentB.probabilidad_riesgo_ml}% ({studentB.nivel_riesgo})</div>
             </div>
 
-            <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
+            <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', marginTop: 'auto' }}>
               Esta comparativa multicriterio ayuda a identificar fortalezas relativas y guiar tutorías de pares.
             </p>
           </div>
 
-          <div style={{ flex: 1.5, padding: '2rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-             <div style={{ width: '100%', maxWidth: '400px' }}>
+          <div style={{ flex: 1.5, padding: '1.5rem', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+             <div style={{ width: '100%', maxWidth: '380px' }}>
                 <Radar data={data} options={options} />
              </div>
           </div>
         </div>
-
       </div>
     </div>
   );

@@ -1,11 +1,33 @@
-import React from 'react';
-import { LayoutDashboard, AlertTriangle, TrendingUp, BrainCircuit } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import {
+  LayoutDashboard,
+  Users,
+  TrendingUp,
+  BrainCircuit,
+  FileUp,
+  Link2,
+  ArrowLeft,
+  GraduationCap,
+  Activity
+} from 'lucide-react';
 
-export default function Sidebar({ activeTab, onTabChange }) {
+export default function Sidebar({ onBackToHero, activeSection, setActiveSection }) {
+  const navItems = [
+    { id: 'general', icon: LayoutDashboard, label: 'Vista General' },
+    { id: 'alertas', icon: Users, label: 'Todos los Estudiantes' },
+    { id: 'rendimiento', icon: TrendingUp, label: 'Predicción Temporal' },
+    { id: 'modelo', icon: Activity, label: 'Rendimiento ML' },
+    { id: 'import', icon: FileUp, label: 'Analista IA (Groq)' },
+    { id: 'motor', icon: BrainCircuit, label: 'Motor ML' },
+    { id: 'integraciones', icon: Link2, label: 'Integraciones' },
+  ];
+
   return (
     <aside className="sidebar">
       <div className="logo-area">
-        <div className="logo-icon"></div>
+        <div className="logo-icon">
+          <GraduationCap size={22} color="white" />
+        </div>
         <div className="logo-text">
           <h2>UNACH-LA</h2>
           <p>Learning Analytics</p>
@@ -13,39 +35,29 @@ export default function Sidebar({ activeTab, onTabChange }) {
       </div>
 
       <nav className="nav-links">
-        <div 
-          className={`nav-item ${activeTab === 'general' ? 'active' : ''}`}
-          onClick={() => onTabChange('general')}
-        >
-          <LayoutDashboard size={20} />
-          <span>Vista General</span>
-        </div>
-        <div 
-          className={`nav-item ${activeTab === 'alertas' ? 'active' : ''}`}
-          onClick={() => onTabChange('alertas')}
-        >
-          <AlertTriangle size={20} />
-          <span>Alertas Críticas</span>
-        </div>
-        <div 
-          className={`nav-item ${activeTab === 'rendimiento' ? 'active' : ''}`}
-          onClick={() => onTabChange('rendimiento')}
-        >
-          <TrendingUp size={20} />
-          <span>Rendimiento</span>
-        </div>
-        <div 
-          className={`nav-item ${activeTab === 'motor' ? 'active' : ''}`}
-          onClick={() => onTabChange('motor')}
-        >
-          <BrainCircuit size={20} />
-          <span>Motor ML (SICOA)</span>
-        </div>
+        <button className="sidebar-back-btn" onClick={onBackToHero}>
+          <ArrowLeft size={16} />
+          Volver al Inicio
+        </button>
+
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <div
+              key={item.id}
+              className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
+              onClick={() => setActiveSection(item.id)}
+            >
+              <Icon size={18} />
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
       </nav>
 
       <div className="system-status">
-        <div className="pulse"></div>
-        <span>Motor ML Activo</span>
+        <div className="pulse" />
+        <span>Motor ML Activo • Groq IA</span>
       </div>
     </aside>
   );

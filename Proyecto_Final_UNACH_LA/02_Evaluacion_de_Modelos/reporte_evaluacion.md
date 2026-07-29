@@ -1,7 +1,7 @@
 # Reporte de Evaluación de Modelos
 ## Evaluación de Modelos - Validación y Pruebas de Rendimiento
 
-**Fecha de generación**: 2026-07-10 13:52:24
+**Fecha de generación**: 2026-07-29 15:09:13
 **Entregable**: Resultados de métricas y validación
 
 ---
@@ -13,7 +13,7 @@
 | Total de registros | 4,000 |
 | Train set | 3,200 (80%) |
 | Test set | 800 (20%) |
-| Features | 66 |
+| Features | 30 |
 | Validación cruzada | 5-Fold Stratified |
 | Semilla aleatoria | 42 |
 | Escalado | StandardScaler (LR, SVM) |
@@ -31,11 +31,11 @@
 
 | Modelo | Accuracy | Precision | Recall | F1-Score | AUC-ROC |
 |--------|----------|-----------|--------|----------|---------|
-| Logistic Regression | 0.5094 ±0.0153 | 0.4717 ±0.0213 | 0.3540 ±0.0101 | 0.4040 ±0.0060 | 0.5122 ±0.0209 |
-| Decision Tree | 0.5203 ±0.0198 | 0.4883 ±0.0223 | 0.4358 ±0.0607 | 0.4585 ±0.0377 | 0.5251 ±0.0273 |
-| Random Forest | 0.5162 ±0.0098 | 0.4816 ±0.0134 | 0.3899 ±0.0166 | 0.4307 ±0.0134 | 0.5089 ±0.0122 |
-| XGBoost | 0.5100 ±0.0200 | 0.4765 ±0.0230 | 0.4278 ±0.0142 | 0.4507 ±0.0169 | 0.5089 ±0.0165 |
-| SVM | 0.5188 ±0.0171 | 0.4839 ±0.0260 | 0.3447 ±0.0291 | 0.4017 ±0.0218 | 0.5149 ±0.0173 |
+| Logistic Regression | 0.5172 ±0.0151 | 0.4787 ±0.0249 | 0.3100 ±0.0205 | 0.3761 ±0.0212 | 0.5063 ±0.0216 |
+| Decision Tree | 0.5206 ±0.0239 | 0.4889 ±0.0555 | 0.1849 ±0.0852 | 0.2546 ±0.0805 | 0.5071 ±0.0245 |
+| Random Forest | 0.5244 ±0.0079 | 0.4849 ±0.0239 | 0.1770 ±0.0171 | 0.2585 ±0.0163 | 0.5085 ±0.0171 |
+| XGBoost | 0.5053 ±0.0136 | 0.4675 ±0.0173 | 0.3799 ±0.0180 | 0.4190 ±0.0155 | 0.5009 ±0.0184 |
+| SVM | 0.5147 ±0.0158 | 0.4695 ±0.0328 | 0.2289 ±0.0234 | 0.3064 ±0.0198 | 0.5011 ±0.0249 |
 
 ---
 
@@ -43,11 +43,11 @@
 
 | Modelo | Accuracy | Precision | Recall | F1-Score | AUC-ROC | Avg Precision | Specificity |
 |--------|----------|-----------|--------|----------|---------|---------------|-------------|
-| Logistic Regression | 0.5200 | 0.4852 | 0.3484 | 0.4056 | 0.5137 | 0.4743 | 0.6722 |
-| Decision Tree | 0.4938 | 0.4607 | 0.4521 | 0.4564 | 0.5048 | 0.4725 | 0.5307 |
-| Random Forest | 0.5200 | 0.4869 | 0.3963 | 0.4370 | 0.5120 | 0.4868 | 0.6297 |
-| XGBoost **★** | 0.5437 | 0.5159 | 0.4761 | 0.4952 | 0.5314 | 0.4932 | 0.6038 |
-| SVM | 0.5162 | 0.4801 | 0.3537 | 0.4074 | 0.5014 | 0.4591 | 0.6604 |
+| Logistic Regression | 0.4925 | 0.4380 | 0.2819 | 0.3430 | 0.4816 | 0.4545 | 0.6792 |
+| Decision Tree | 0.5000 | 0.4568 | 0.3378 | 0.3884 | 0.4797 | 0.4649 | 0.6439 |
+| Random Forest | 0.5125 | 0.4453 | 0.1516 | 0.2262 | 0.5043 | 0.4892 | 0.8325 |
+| XGBoost **★** | 0.5162 | 0.4811 | 0.3723 | 0.4198 | 0.5125 | 0.4819 | 0.6439 |
+| SVM | 0.5112 | 0.4551 | 0.2021 | 0.2799 | 0.5066 | 0.4875 | 0.7854 |
 
 > **★ Mejor modelo por F1-Score: XGBoost**
 
@@ -57,11 +57,11 @@
 
 | Modelo | TN (Verdaderos Neg.) | FP (Falsos Pos.) | FN (Falsos Neg.) | TP (Verdaderos Pos.) |
 |--------|---------------------|-------------------|-------------------|----------------------|
-| Logistic Regression | 285 | 139 | 245 | 131 |
-| Decision Tree | 225 | 199 | 206 | 170 |
-| Random Forest | 267 | 157 | 227 | 149 |
-| XGBoost | 256 | 168 | 197 | 179 |
-| SVM | 280 | 144 | 243 | 133 |
+| Logistic Regression | 288 | 136 | 270 | 106 |
+| Decision Tree | 273 | 151 | 249 | 127 |
+| Random Forest | 353 | 71 | 319 | 57 |
+| XGBoost | 273 | 151 | 236 | 140 |
+| SVM | 333 | 91 | 300 | 76 |
 
 ---
 
@@ -69,11 +69,11 @@
 
 | Modelo | Train Accuracy | Test Accuracy (CV) | Diferencia | Diagnóstico |
 |--------|---------------|--------------------|-----------:|-------------|
-| Logistic Regression | 0.5645 | 0.5094 | 0.0552 | ⚡ Overfitting moderado |
-| Decision Tree | 0.7633 | 0.5203 | 0.2430 | ⚠️ Overfitting alto |
-| Random Forest | 0.9998 | 0.5162 | 0.4836 | ⚠️ Overfitting alto |
-| XGBoost | 1.0000 | 0.5100 | 0.4900 | ⚠️ Overfitting alto |
-| SVM | 0.8470 | 0.5188 | 0.3282 | ⚠️ Overfitting alto |
+| Logistic Regression | 0.5495 | 0.5172 | 0.0323 | ✅ Sin overfitting |
+| Decision Tree | 0.5698 | 0.5206 | 0.0492 | ✅ Sin overfitting |
+| Random Forest | 0.6620 | 0.5244 | 0.1377 | ⚡ Overfitting moderado |
+| XGBoost | 0.7699 | 0.5053 | 0.2646 | ⚠️ Overfitting alto |
+| SVM | 0.6851 | 0.5147 | 0.1704 | ⚠️ Overfitting alto |
 
 ---
 
@@ -81,21 +81,21 @@
 
 | # | Variable | Importancia |
 |---|----------|-------------|
-| 1 | `comp_cuestionario` | 0.021264 |
-| 2 | `franja_preferida` | 0.020603 |
-| 3 | `evt_quiz_submitted` | 0.020533 |
-| 4 | `comp_foro` | 0.020271 |
-| 5 | `tiempo_conexion_promedio_min` | 0.020060 |
-| 6 | `comp_tarea` | 0.020039 |
-| 7 | `evt_page_viewed` | 0.019863 |
-| 8 | `duracion_total_seg` | 0.019491 |
-| 9 | `actividad_finde` | 0.019361 |
-| 10 | `sector_residencia` | 0.019328 |
-| 11 | `calificacion_lms_min` | 0.019261 |
-| 12 | `evt_quiz_attempted` | 0.018796 |
-| 13 | `navegador_principal` | 0.018749 |
-| 14 | `tasa_errores` | 0.018534 |
-| 15 | `dias_activos` | 0.018287 |
+| 1 | `calificacion_lms_min` | 0.037774 |
+| 2 | `es_repetidor` | 0.037661 |
+| 3 | `promedio_nivelacion` | 0.037403 |
+| 4 | `tiempo_conexion_promedio_min` | 0.036617 |
+| 5 | `canton_procedencia` | 0.035912 |
+| 6 | `num_retiros` | 0.035790 |
+| 7 | `edad` | 0.035615 |
+| 8 | `sector_procedencia` | 0.035020 |
+| 9 | `intensidad_foro` | 0.034954 |
+| 10 | `minutos_por_dia_activo` | 0.034865 |
+| 11 | `evt_course_viewed` | 0.034464 |
+| 12 | `enfermedad` | 0.034350 |
+| 13 | `tipo_beca` | 0.034020 |
+| 14 | `duracion_promedio_seg` | 0.033766 |
+| 15 | `nivel` | 0.033292 |
 
 ---
 
@@ -105,11 +105,11 @@
 
 | Métrica | Valor |
 |---------|-------|
-| Accuracy | 0.5437 |
-| Precision | 0.5159 |
-| Recall | 0.4761 |
-| F1-Score | 0.4952 |
-| AUC-ROC | 0.5314 |
+| Accuracy | 0.5162 |
+| Precision | 0.4811 |
+| Recall | 0.3723 |
+| F1-Score | 0.4198 |
+| AUC-ROC | 0.5125 |
 
 ### Observaciones
 - Se evaluaron 5 modelos de clasificación para predecir riesgo académico.
