@@ -318,7 +318,7 @@ Formato esperado:
               onClick={handleFuse}
               disabled={isFusing || files.length < 2}
             >
-              {isFusing ? 'Fusionando con IA...' : <><Sparkles size={16} /> Fusionar Bases</>}
+              {isFusing ? 'Procesando con IA...' : <><Sparkles size={16} /> Enviar a Motor Predictivo</>}
             </button>
           </div>
         </div>

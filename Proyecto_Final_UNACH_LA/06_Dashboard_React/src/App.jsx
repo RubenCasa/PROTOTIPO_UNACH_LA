@@ -190,8 +190,8 @@ function App() {
           <section id="alertas" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
             <header className="header" style={{ marginBottom: '1.5rem' }}>
               <div>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--text-main)' }}>Lista Dinámica de Estudiantes en Riesgo</h2>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Visualizando el riesgo detectado por la heurística sobre los datos cruzados.</p>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--text-main)' }}>Resultados del Motor Predictivo (XGBoost)</h2>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>Visualizando las probabilidades de deserción generadas por nuestro modelo ML entrenado sobre tus datos recientes.</p>
               </div>
             </header>
             
