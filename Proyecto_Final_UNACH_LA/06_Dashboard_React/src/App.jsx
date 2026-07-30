@@ -16,9 +16,38 @@ function App() {
   // Dynamic Global State
   const [globalFusedData, setGlobalFusedData] = useState(null);
   
-  // Derived state for the UI
-  const [kpiData, setKpiData] = useState(null);
-  const [alertsData, setAlertsData] = useState(null);
+  const defaultAlerts = Array.from({ length: 100 }, (_, i) => {
+    const isHigh = i < 12; // 12% Alto
+    const isMedium = i >= 12 && i < 40; // 28% Medio
+    const riesgo = isHigh ? "Alto" : isMedium ? "Medio" : "Bajo";
+    const prob = isHigh ? 0.85 + Math.random()*0.1 : isMedium ? 0.5 + Math.random()*0.3 : Math.random()*0.3;
+    return {
+      id: `UNACH-2026-${i+1000}`,
+      estudiante: `Estudiante ${i+1}`,
+      carrera: ["Ing. Sistemas", "Medicina", "Derecho", "Psicología"][i % 4],
+      semestre: `${(i % 8) + 1}mo`,
+      riesgo,
+      probabilidad_desercion: prob,
+      factores_clave: isHigh ? ["Baja Calificación LMS", "Ausencia en Foros"] : ["Promedio Regular"],
+    };
+  }).sort((a, b) => b.probabilidad_desercion - a.probabilidad_desercion);
+
+  const defaultKpi = {
+    metadata: { fecha_calculo: "Resultados del Prototipo" },
+    kpi_ejecutivos: [
+      { id: "total_evaluados", titulo: "Estudiantes Evaluados", valor_actual: "4,000", tendencia: "up", cambio_porcentual: "Muestra", descripcion: "SICOA + Moodle" },
+      { id: "tasa_riesgo_global", titulo: "Riesgo Alto Detectado", valor_actual: "12%", tendencia: "up", cambio_porcentual: "480 est.", descripcion: "Requieren plan de tutoría" },
+      { id: "precision_modelo", titulo: "Estudiantes Seguros", valor_actual: "2,400", tendencia: "up", cambio_porcentual: "60%", descripcion: "Riesgo Bajo" }
+    ]
+  };
+
+  const defaultAlertsData = {
+    resumen_riesgo: { alto: 480, medio: 1120, bajo: 2400 },
+    top_alertas_prioritarias: defaultAlerts
+  };
+
+  const [kpiData, setKpiData] = useState(defaultKpi);
+  const [alertsData, setAlertsData] = useState(defaultAlertsData);
 
   // When data is fused, calculate KPIs and Alerts dynamically
   const handleDataFused = (fusedData) => {
@@ -154,7 +183,7 @@ function App() {
         )}
 
         {/* Notificación Global si no hay datos fusionados para las otras secciones */}
-        {activeSection !== 'fusion' && activeSection !== 'modelo' && activeSection !== 'rendimiento' && !globalFusedData && (
+        {activeSection !== 'fusion' && activeSection !== 'modelo' && activeSection !== 'general' && activeSection !== 'alertas' && !globalFusedData && (
           <div className="glass-panel fade-in" style={{ margin: '2rem 0', textAlign: 'center', padding: '3rem 1rem' }}>
             <AlertCircle size={48} color="var(--text-muted)" style={{ marginBottom: '1rem' }} />
             <h2 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Faltan Datos Dinámicos</h2>
@@ -168,7 +197,7 @@ function App() {
         )}
 
         {/* Sección 2: Vista General (KPIs) */}
-        {activeSection === 'general' && globalFusedData && (
+        {activeSection === 'general' && (
           <section id="general" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
             <header className="header" style={{ marginBottom: '2rem' }}>
               <div>
@@ -186,7 +215,7 @@ function App() {
         )}
 
         {/* Sección 3: Todos los Estudiantes / Alertas */}
-        {activeSection === 'alertas' && globalFusedData && (
+        {activeSection === 'alertas' && (
           <section id="alertas" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
             <header className="header" style={{ marginBottom: '1.5rem' }}>
               <div>
@@ -199,13 +228,6 @@ function App() {
               <RiskChart data={alertsData.resumen_riesgo} />
               <AlertsTable data={alertsData.top_alertas_prioritarias} />
             </div>
-          </section>
-        )}
-
-        {/* Sección 4: Rendimiento / Predicción (Estático/Demostrativo o puede alimentarse del ML futuro) */}
-        {activeSection === 'rendimiento' && globalFusedData && (
-          <section id="rendimiento" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
-            <PredictionChart />
           </section>
         )}
 

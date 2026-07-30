@@ -13,7 +13,6 @@ export default function Sidebar({ onBackToHero, activeSection, setActiveSection 
     { id: 'modelo', icon: Activity, label: 'Nuestro Modelo Entrenado' },
     { id: 'general', icon: LayoutDashboard, label: 'Vista General' },
     { id: 'alertas', icon: Users, label: 'Todos los Estudiantes' },
-    { id: 'rendimiento', icon: TrendingUp, label: 'Predicción Temporal' },
   ];
 
   const groupFusion = [
