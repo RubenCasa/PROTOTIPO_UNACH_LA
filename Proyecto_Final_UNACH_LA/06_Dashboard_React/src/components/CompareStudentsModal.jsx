@@ -49,8 +49,8 @@ export default function CompareStudentsModal({ isOpen, onClose, students }) {
   const options = {
     scales: {
       r: {
-        angleLines: { color: 'rgba(255, 255, 255, 0.06)' },
-        grid: { color: 'rgba(255, 255, 255, 0.06)' },
+        angleLines: { color: 'rgba(0, 0, 0, 0.08)' },
+        grid: { color: 'rgba(0, 0, 0, 0.08)' },
         pointLabels: { color: '#94a3b8', font: { size: 11, family: 'Inter' } },
         ticks: { display: false, min: 0, max: 100 }
       }

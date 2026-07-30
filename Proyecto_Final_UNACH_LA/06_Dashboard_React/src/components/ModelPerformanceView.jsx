@@ -102,9 +102,9 @@ export default function ModelPerformanceView() {
         },
       },
       tooltip: {
-        backgroundColor: 'rgba(17, 24, 39, 0.95)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
         titleColor: '#f1f5f9',
-        bodyColor: '#cbd5e1',
+        bodyColor: '#334155',
         borderColor: 'rgba(255,255,255,0.1)',
         borderWidth: 1,
         padding: 14,
@@ -116,12 +116,12 @@ export default function ModelPerformanceView() {
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.04)' },
+        grid: { color: 'rgba(0, 0, 0, 0.06)' },
         ticks: { color: '#94a3b8', font: { family: 'Inter', size: 12, weight: 500 } },
         border: { color: 'rgba(255,255,255,0.06)' },
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.04)' },
+        grid: { color: 'rgba(0, 0, 0, 0.06)' },
         ticks: {
           color: '#64748b',
           font: { family: 'Inter', size: 11 },
@@ -242,8 +242,8 @@ export default function ModelPerformanceView() {
                   borderRadius: '999px',
                   fontSize: '0.75rem',
                   fontWeight: 500,
-                  background: isNew ? 'rgba(139, 92, 246, 0.12)' : 'rgba(255, 255, 255, 0.05)',
-                  border: `1px solid ${isNew ? 'rgba(139, 92, 246, 0.3)' : 'rgba(255, 255, 255, 0.08)'}`,
+                  background: isNew ? 'rgba(139, 92, 246, 0.12)' : 'rgba(0, 0, 0, 0.05)',
+                  border: `1px solid ${isNew ? 'rgba(139, 92, 246, 0.3)' : 'rgba(0, 0, 0, 0.1)'}`,
                   color: isNew ? '#a78bfa' : 'var(--text-muted)',
                 }}
               >

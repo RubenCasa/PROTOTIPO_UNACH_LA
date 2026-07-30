@@ -11,7 +11,7 @@ import { AlertCircle } from 'lucide-react';
 
 function App() {
   const [view, setView] = useState('hero');
-  const [activeSection, setActiveSection] = useState('fusion');
+  const [activeSection, setActiveSection] = useState('modelo');
   
   // Dynamic Global State
   const [globalFusedData, setGlobalFusedData] = useState(null);
@@ -154,15 +154,15 @@ function App() {
         )}
 
         {/* Notificación Global si no hay datos fusionados para las otras secciones */}
-        {activeSection !== 'fusion' && activeSection !== 'modelo' && !globalFusedData && (
+        {activeSection !== 'fusion' && activeSection !== 'modelo' && activeSection !== 'rendimiento' && !globalFusedData && (
           <div className="glass-panel fade-in" style={{ margin: '2rem 0', textAlign: 'center', padding: '3rem 1rem' }}>
             <AlertCircle size={48} color="var(--text-muted)" style={{ marginBottom: '1rem' }} />
-            <h2 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Faltan Datos</h2>
+            <h2 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Faltan Datos Dinámicos</h2>
             <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-              Para ver el análisis dinámico, primero debes subir y fusionar los archivos en la sección <strong>Fusión Inteligente</strong>.
+              Esta vista requiere datos en vivo. Para ver el análisis dinámico, debes subir y fusionar los archivos en la sección <strong>Fusión de Datos IA</strong>.
             </p>
             <button className="btn-primary" onClick={() => setActiveSection('fusion')}>
-              Ir a Fusión Inteligente
+              Ir a Fusión de Datos IA
             </button>
           </div>
         )}

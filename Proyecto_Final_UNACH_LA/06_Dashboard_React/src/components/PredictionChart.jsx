@@ -75,9 +75,9 @@ export default function PredictionChart() {
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(17, 24, 39, 0.95)',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
         titleColor: '#f1f5f9',
-        bodyColor: '#cbd5e1',
+        bodyColor: '#334155',
         borderColor: 'rgba(255,255,255,0.1)',
         borderWidth: 1,
         padding: 14,
@@ -88,12 +88,12 @@ export default function PredictionChart() {
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.04)' },
+        grid: { color: 'rgba(0, 0, 0, 0.06)' },
         ticks: { color: '#64748b', font: { family: 'Inter', size: 11 } },
         border: { color: 'rgba(255,255,255,0.06)' },
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.04)' },
+        grid: { color: 'rgba(0, 0, 0, 0.06)' },
         ticks: { color: '#64748b', font: { family: 'Inter', size: 11 } },
         border: { color: 'rgba(255,255,255,0.06)' },
         min: 0,
