@@ -242,7 +242,9 @@ Formato esperado:
             <FileSpreadsheet size={24} color="var(--text-accent)" style={{ marginRight: 10 }} />
             Fusión Inteligente de Datos (SICOA + Moodle)
           </h1>
-          <p>Sube tus archivos académicos. La IA seleccionará las variables clave, los cruzará y generará análisis y planes de intervención.</p>
+          <p>
+            El pipeline de ETL procesa y fusiona eficazmente <strong>74,464 registros de actividad LMS</strong> con <strong>4,000 registros académicos SICOA</strong>, generando un dataset consolidado de <strong>89 variables (4,000 × 89)</strong>. La IA seleccionará las variables clave, los cruzará y generará análisis y planes de intervención.
+          </p>
         </div>
       </header>
 

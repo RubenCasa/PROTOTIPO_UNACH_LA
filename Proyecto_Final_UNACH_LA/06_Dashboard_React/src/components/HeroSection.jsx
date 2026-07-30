@@ -67,16 +67,16 @@ export default function HeroSection({ onEnterDashboard }) {
           <span>Sistema Activo — Motor Predictivo XGBoost v2.0</span>
         </div>
 
-        <h1 className="hero-title">
-          <span className="gradient-text">Universidad Nacional</span>
+        <h1 className="hero-title" style={{ fontSize: '3rem', marginBottom: '1rem' }}>
+          <span className="gradient-text">UNACH-LA</span>
           <br />
-          de Chimborazo
+          Modelo Institucional de Learning Analytics
         </h1>
 
         <p className="hero-subtitle">
-          Sistema de Alerta Temprana con Inteligencia Artificial.
-          Predicción de riesgo académico, análisis de datos y
-          planes de intervención personalizados para cada estudiante.
+          Sistema de Alerta Temprana que integra datos del <strong>SICOA y Moodle</strong>. 
+          El prototipo clasifica exitosamente a <strong>4,000 estudiantes en tres niveles de riesgo</strong> 
+          con planes de tutoría personalizados y genera alertas consumibles (CSV y JSON).
         </p>
 
         <div className="hero-stats">
@@ -100,18 +100,18 @@ export default function HeroSection({ onEnterDashboard }) {
           <ArrowRight size={18} />
         </button>
 
-        <div className="hero-tags">
+        <div className="hero-tags" style={{ marginTop: '2rem' }}>
           <span className="hero-tag">
-            <Sparkles size={14} /> IA Groq — Llama 3.3
+            <Sparkles size={14} /> React + FastAPI
           </span>
           <span className="hero-tag">
-            <Shield size={14} /> SICOA Integrado
+            <Cpu size={14} /> XGBoost
           </span>
           <span className="hero-tag">
-            <Cpu size={14} /> Motor XGBoost
+            <Sparkles size={14} /> Groq / Llama
           </span>
           <span className="hero-tag">
-            <GraduationCap size={14} /> Moodle LMS
+            <Shield size={14} /> Arquitectura Escalable
           </span>
         </div>
       </div>

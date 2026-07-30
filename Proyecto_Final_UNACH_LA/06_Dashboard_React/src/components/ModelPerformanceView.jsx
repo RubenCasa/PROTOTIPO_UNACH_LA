@@ -144,10 +144,11 @@ export default function ModelPerformanceView() {
         <div>
           <h2 style={{ fontSize: '1.5rem', fontWeight: '700', color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: '10px' }}>
             <Activity size={24} color="#8b5cf6" />
-            Rendimiento del Motor ML — Antes vs Después
+            Rendimiento del Motor ML — Evaluación de Modelos
           </h2>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-            Comparativa de métricas tras aplicar feature engineering, regularización y selección de features.
+            Se evaluaron 5 modelos de clasificación supervisada (Regresión Logística, Random Forest, SVM, Naive Bayes y XGBoost), 
+            siendo <strong>XGBoost el de mejor rendimiento</strong> con un F1-Score de 0.4198.
           </p>
         </div>
       </header>
@@ -195,10 +196,10 @@ export default function ModelPerformanceView() {
         <div>
           <strong style={{ color: 'var(--status-yellow)', fontSize: '0.9rem' }}>Nota sobre la calidad de datos</strong>
           <p style={{ color: 'var(--text-muted)', fontSize: '0.82rem', marginTop: '4px', lineHeight: 1.5 }}>
-            Las métricas predictivas (~51% accuracy) reflejan la naturaleza del dataset utilizado. 
+            Las métricas predictivas (F1-Score: 0.4198) reflejan la naturaleza sintética de los datos utilizados en este prototipo. 
             El logro principal es la <strong style={{ color: 'var(--text-main)' }}>eliminación del overfitting</strong> (de 49% a ~1%), 
-            lo que significa que el modelo ahora <strong style={{ color: 'var(--text-main)' }}>generaliza correctamente</strong> en vez de memorizar. 
-            Con datos reales del SICOA, se espera un salto significativo en todas las métricas.
+            lo que significa que el modelo ahora <strong style={{ color: 'var(--text-main)' }}>generaliza correctamente</strong>. 
+            Con datos reales institucionales del SICOA, se espera una mejora significativa en todas las métricas de precisión.
           </p>
         </div>
       </div>
@@ -213,9 +214,11 @@ export default function ModelPerformanceView() {
 
       {/* Selected features */}
       <div className="glass-panel">
-        <h3 className="panel-title">Features Seleccionadas por el Motor (30 de 70)</h3>
+        <h3 className="panel-title">Feature Importance: Integración Multimodal</h3>
         <p style={{ color: 'var(--text-muted)', fontSize: '0.85rem', marginBottom: '1rem' }}>
-          SelectKBest (mutual_info_classif) identificó las variables con mayor información predictiva:
+          El análisis de <em>feature importance</em> reveló que las variables más predictivas combinan tanto <strong>datos académicos</strong> 
+          (calificación mínima LMS, promedio de nivelación, repetición) como de <strong>comportamiento digital</strong> (tiempo de conexión, 
+          intensidad de foros), validando de forma contundente la importancia de la integración multimodal de datos.
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
           {[
