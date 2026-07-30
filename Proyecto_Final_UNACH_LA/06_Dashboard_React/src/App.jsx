@@ -19,18 +19,19 @@ function App() {
   const defaultAlerts = Array.from({ length: 100 }, (_, i) => {
     const isHigh = i < 12; // 12% Alto
     const isMedium = i >= 12 && i < 40; // 28% Medio
-    const riesgo = isHigh ? "Alto" : isMedium ? "Medio" : "Bajo";
+    const riesgo = isHigh ? "ALTO" : isMedium ? "MEDIO" : "BAJO";
     const prob = isHigh ? 0.85 + Math.random()*0.1 : isMedium ? 0.5 + Math.random()*0.3 : Math.random()*0.3;
+    const semaforo = isHigh ? "ROJO" : isMedium ? "AMARILLO" : "VERDE";
     return {
-      id: `UNACH-2026-${i+1000}`,
-      estudiante: `Estudiante ${i+1}`,
+      id_estudiante: `UNACH-2026-${i+1000}`,
       carrera: ["Ing. Sistemas", "Medicina", "Derecho", "Psicología"][i % 4],
-      semestre: `${(i % 8) + 1}mo`,
-      riesgo,
-      probabilidad_desercion: prob,
+      nivel_riesgo: riesgo,
+      probabilidad_riesgo_ml: (prob * 100).toFixed(1),
+      semaforo: semaforo,
+      accion_recomendada: isHigh ? "Tutoría Intensiva Inmediata" : isMedium ? "Seguimiento Continuo" : "Ninguna Acción Requerida",
       factores_clave: isHigh ? ["Baja Calificación LMS", "Ausencia en Foros"] : ["Promedio Regular"],
     };
-  }).sort((a, b) => b.probabilidad_desercion - a.probabilidad_desercion);
+  }).sort((a, b) => b.probabilidad_riesgo_ml - a.probabilidad_riesgo_ml);
 
   const defaultKpi = {
     metadata: { fecha_calculo: "Resultados del Prototipo" },
