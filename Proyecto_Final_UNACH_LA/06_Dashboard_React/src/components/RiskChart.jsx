@@ -72,7 +72,7 @@ export default function RiskChart({ data }) {
       const { ctx, width, height } = chart;
       ctx.save();
       ctx.font = '800 2rem Inter';
-      ctx.fillStyle = '#f1f5f9';
+      ctx.fillStyle = '#0f172a';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.fillText(total.toLocaleString(), width / 2, height / 2 - 8);

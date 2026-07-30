@@ -34,11 +34,11 @@ function App() {
 
   const defaultKpi = {
     metadata: { fecha_calculo: "Resultados del Prototipo" },
-    kpi_ejecutivos: [
-      { id: "total_evaluados", titulo: "Estudiantes Evaluados", valor_actual: "4,000", tendencia: "up", cambio_porcentual: "Muestra", descripcion: "SICOA + Moodle" },
-      { id: "tasa_riesgo_global", titulo: "Riesgo Alto Detectado", valor_actual: "12%", tendencia: "up", cambio_porcentual: "480 est.", descripcion: "Requieren plan de tutoría" },
-      { id: "precision_modelo", titulo: "Estudiantes Seguros", valor_actual: "2,400", tendencia: "up", cambio_porcentual: "60%", descripcion: "Riesgo Bajo" }
-    ]
+    KPI_01_Tasa_Riesgo_Academico: { nombre: "Tasa de Riesgo Global", valor: 12, unidad: "%", meta_institucional: "< 15%", estado: "ADVERTENCIA" },
+    KPI_02_Promedio_General_Notas: { nombre: "Estudiantes Evaluados", valor: 4000, unidad: "", meta_institucional: "N/A", estado: "NORMAL" },
+    KPI_03_Asistencia_Promedio: { nombre: "Estudiantes Seguros", valor: 2400, unidad: "", meta_institucional: "> 50%", estado: "NORMAL" },
+    KPI_04_Efectividad_Modelo_ML: { nombre: "F1-Score (XGBoost)", valor: 0.4198, unidad: "", meta_institucional: "> 0.40", estado: "NORMAL" },
+    KPI_05_Overfitting_Control: { nombre: "Overfitting (Train vs Test)", valor: 1, unidad: "%", meta_institucional: "< 5%", estado: "NORMAL" }
   };
 
   const defaultAlertsData = {
@@ -210,7 +210,7 @@ function App() {
                 className="avatar"
               />
             </header>
-            <KPIGrid data={kpiData.kpi_ejecutivos} />
+            <KPIGrid data={kpiData} />
           </section>
         )}
 
