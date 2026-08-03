@@ -86,18 +86,56 @@ def aplicar_diccionario_anonimizacion(archivo_entrada, archivo_salida, columna_i
     print(f"Archivo anonimizado exportado a: {archivo_salida}")
 
 def preparar_datos_moodle():
-    print("\nIniciando preparación de Moodle (LMS)...")
-    if not os.path.exists(FILE_LMS):
-        print(f"Error: No se encuentra el archivo {FILE_LMS}")
+    print("\nIniciando preparación de Moodle (LMS) desde Registros_usuarios_anonimizados_final.xlsx...")
+    if not os.path.exists(FILE_ANONIMIZADOS):
+        print(f"Error: No se encuentra el archivo {FILE_ANONIMIZADOS}")
         return
         
-    print("Cargando archivo Excel de Moodle (esto puede tomar unos segundos)...")
-    df_lms = pd.read_excel(FILE_LMS)
-    print(f"Dataset Moodle cargado: {df_lms.shape}")
-    
-    # Exportar a CSV para lectura ultrarrápida en el Dashboard
-    df_lms.to_csv(OUTPUT_MOODLE, index=False, encoding='utf-8')
-    print(f"Archivo estandarizado guardado en: {OUTPUT_MOODLE}")
+    print("Cargando hojas del archivo Moodle (esto puede tomar varios minutos por ser 140MB)...")
+    try:
+        # Obtenemos los nombres de todas las hojas
+        xl = pd.ExcelFile(FILE_ANONIMIZADOS)
+        sheet_names = xl.sheet_names
+        
+        # Ignorar la primera hoja si es el diccionario de excepciones
+        if 'Excepciones' in sheet_names[0] or 'diccionario' in sheet_names[0].lower():
+            hojas_a_procesar = sheet_names[1:]
+        else:
+            hojas_a_procesar = sheet_names[1:] # Asumimos que la 1ra es diccionario por la estructura vista
+
+        df_list = []
+        # Leer cada hoja y sacar solo las columnas esenciales para no reventar la RAM
+        for sheet in hojas_a_procesar:
+            try:
+                df = pd.read_excel(FILE_ANONIMIZADOS, sheet_name=sheet, usecols=['ID SICOA', 'Nombre evento'])
+                df = df.rename(columns={'ID SICOA': 'codigo_usuario', 'Nombre evento': 'evento'})
+                df_list.append(df)
+            except Exception as e:
+                # Si una hoja no tiene esas columnas, la saltamos
+                continue
+
+        if not df_list:
+            print("No se encontraron datos válidos en las hojas.")
+            return
+
+        df_moodle = pd.concat(df_list, ignore_index=True)
+        print(f"Dataset Moodle cargado: {df_moodle.shape}")
+        
+        # Para que el navegador web (Dashboard React) no colapse al leer el CSV, 
+        # tomamos una muestra representativa si el dataset es masivo (>50,000 registros)
+        if len(df_moodle) > 50000:
+            print("Muestreando a 50,000 registros para optimización web...")
+            df_moodle = df_moodle.sample(n=50000, random_state=42)
+            
+        # Limpiar nulos
+        df_moodle = df_moodle.dropna(subset=['evento'])
+
+        # Exportar a CSV para lectura ultrarrápida en el Dashboard
+        df_moodle.to_csv(OUTPUT_MOODLE, index=False, encoding='utf-8')
+        print(f"Archivo estandarizado guardado en: {OUTPUT_MOODLE}")
+        
+    except Exception as e:
+        print(f"Error procesando Moodle: {e}")
 
 if __name__ == '__main__':
     preparar_datos_sicoa()
