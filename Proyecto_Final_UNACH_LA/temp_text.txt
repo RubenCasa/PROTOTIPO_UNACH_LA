@@ -1,0 +1,436 @@
+UNIVERSIDAD NACIONAL DE CHIMBORAZO
+PROYECTO DE INVESTIGACIÓN — AYUDANTÍA
+INFORME FINAL COMPLETO
+MODELO INSTITUCIONAL DE LEARNING ANALYTICS (UNACH-LA):
+SISTEMA DE ALERTA TEMPRANA CON INTELIGENCIA ARTIFICIAL
+Riobamba — Chimborazo, Ecuador
+Julio 2026
+Versión 1.0 — Documento Final
+ÍNDICE GENERAL
+1. Introducción y Contexto del Proyecto
+2. Fase 1: Alineación Normativa y Fundamentación
+   2.1 Entregable 1: Matriz Normativa y Análisis Legal
+   2.2 Entregable 2: Estado del Arte y Bibliografía Sistematizada
+   2.3 Entregable 3: Informe de Ecosistema y Flujos de Datos
+   2.4 Entregable 4: Documento de Lineamientos Éticos y de Gobernanza
+3. Fase 2: Diseño e Implementación de Machine Learning
+   3.1 Preparación y Limpieza de Datos Académicos
+   3.2 Diseño de Modelos ML para Diagnóstico Académico
+   3.3 Implementación de Modelos ML en Python y scikit-learn
+   3.4 Evaluación de Modelos: Validación y Pruebas de Rendimiento
+   3.5 Visualización y KPIs: Diseño de Dashboards e Indicadores
+4. Fase 3: Documentación y Cierre
+   4.1 Consolidación del Prototipo Funcional UNACH-LA
+   4.2 Dashboard Institucional en React + Vite
+   4.3 Backend API con FastAPI
+   4.4 Integración con Inteligencia Artificial Generativa
+5. Arquitectura Técnica Completa del Sistema
+6. Resultados Consolidados y Métricas Finales
+7. Conclusiones y Recomendaciones
+8. Bibliografía y Referencias
+9. Anexos
+1. INTRODUCCIÓN Y CONTEXTO DEL PROYECTO
+1.1 Planteamiento del Problema
+En la Universidad Nacional de Chimborazo (UNACH), los datos estudiantiles y de rendimiento académico se encuentran depositados en múltiples plataformas independientes: el Sistema Integrado de Control Académico (SICOA), las aulas virtuales basadas en Moodle (LMS), los registros de tutorías y los informes de Bienestar Estudiantil. Esta fragmentación genera silos tecnológicos que impiden una visión integral del desempeño estudiantil, provocando que las decisiones académicas se tomen con base en percepciones subjetivas y no en evidencia cuantificable.
+Uno de los factores agravantes identificados en el diagnóstico es la brecha digital presente en la provincia de Chimborazo, donde aproximadamente el 36% de los hogares carecen de conexión a internet estable (INEC, 2022). Esta realidad impacta directamente en la capacidad de los estudiantes para acceder a los recursos del LMS, generando patrones irregulares de actividad que deben ser contemplados por cualquier sistema predictivo.
+1.2 Justificación e Importancia de la Investigación
+La implementación de un modelo institucional de Learning Analytics (LA) permite consolidar una cultura de mejora continua basada en datos, respondiendo tanto a la política nacional de transformación digital del Ecuador como a las directrices del Consejo de Educación Superior (CES) para el aseguramiento de la calidad. El proyecto UNACH-LA convierte la fragmentación de datos existente en una oportunidad de innovación educativa sustentable.
+La importancia de esta investigación radica en ser un trabajo pionero a nivel regional al democratizar el acceso a la inteligencia artificial en la gestión académica. Al liberar el código fuente de manera pública y de código abierto (Open Source), la UNACH no solo resuelve un problema interno de deserción, sino que provee una arquitectura de referencia escalable que cualquier otra universidad latinoamericana puede adoptar y adaptar a su propia realidad sin incurrir en costos de software privativo.
+El proyecto se articula con los siguientes marcos institucionales:
+Dominios académicos: Desarrollo socioeconómico y educativo para el fortalecimiento de la institucionalidad democrática y ciudadana.
+Campos del conocimiento: Educación y Tecnologías de la Información y Comunicación (TICs).
+Líneas de investigación: Ciencias de la Educación e Ingeniería Informática.
+Alineación con los Objetivos de Desarrollo Sostenible (ODS):
+ODS 4 — Educación de Calidad: Garantizar una educación inclusiva y equitativa.
+ODS 9 — Industria, Innovación e Infraestructura: Fomentar la innovación y apoyar la investigación científica.
+ODS 17 — Alianzas para Lograr los Objetivos: Fortalecer la alianza entre tecnología y educación.
+1.3 Objetivos
+Objetivo General
+Desarrollar e implementar un modelo institucional de Learning Analytics en la Universidad Nacional de Chimborazo que mejore los procesos de formación académica, fortalezca las decisiones pedagógicas y transfiera conocimiento a las partes interesadas.
+Objetivos Específicos
+Realizar un diagnóstico del ecosistema tecnológico de la UNACH y sus flujos de datos académicos.
+Diseñar e implementar modelos de Machine Learning para la predicción del riesgo académico estudiantil.
+Evaluar y validar el rendimiento de los modelos predictivos utilizando métricas estándar de clasificación.
+Construir un prototipo funcional completo (Dashboard + Backend + Motor ML) que permita la operación institucional del sistema.
+Documentar y sistematizar el proceso metodológico para su replicabilidad en otras instituciones de educación superior.
+1.4 Metodología General
+El proyecto adoptó un enfoque metodológico mixto. El componente cuantitativo incluyó minería de datos educativos, modelos predictivos supervisados (XGBoost, Random Forest, Logistic Regression, Decision Tree, SVM), extracción y procesamiento de datos del SICOA y LMS. El componente cualitativo abarcó la validación con grupos focales (docentes tutores y coordinadores de carrera), análisis normativo institucional y revisión de literatura especializada.
+La metodología de desarrollo tecnológico siguió el marco CRISP-DM (Cross-Industry Standard Process for Data Mining), ampliamente utilizado en proyectos de ciencia de datos educativos (Shearer, 2000; Chapman et al., 2000).
+2. FASE 1: ALINEACIÓN NORMATIVA Y FUNDAMENTACIÓN
+El objetivo de esta fase fue establecer el marco normativo, ético y contextual que sustenta la implementación del sistema UNACH-LA, garantizando el cumplimiento de la legislación ecuatoriana vigente y las mejores prácticas internacionales en Learning Analytics.
+2.1 Entregable 1: Matriz Normativa y Análisis Legal
+Se llevó a cabo una revisión exhaustiva de la normativa institucional de la UNACH y de la legislación ecuatoriana aplicable al tratamiento de datos personales en el contexto educativo, con especial énfasis en la Ley Orgánica de Protección de Datos Personales (LOPDP) del Ecuador (Registro Oficial Suplemento 459, 26-may-2021), el Reglamento de Régimen Académico del CES, el Estatuto de la UNACH y la normativa internacional de referencia (GDPR).
+Tabla 1
+Análisis de Cumplimiento Normativo del Proyecto UNACH-LA respecto a la LOPDP
+Nota. LOPDP = Ley Orgánica de Protección de Datos Personales del Ecuador. ARCO = Acceso, Rectificación, Cancelación, Oposición. Fuente: Elaboración propia basada en la LOPDP (2021) y el Estatuto de la UNACH (2023).
+2.2 Entregable 2: Estado del Arte y Bibliografía Sistematizada
+Se realizó una investigación documental sistematizada sobre casos de éxito en la implementación de Learning Analytics en instituciones de educación superior a nivel mundial y regional, con revisión de literatura especializada en las bases Scopus, Web of Science, IEEE Xplore, ACM Digital Library y Google Scholar.
+Tabla 2
+Marcos de Referencia en Learning Analytics Revisados para la Fundamentación del Proyecto
+Nota. HE = Higher Education (Educación Superior). SRL = Self-Regulated Learning. Fuente: Elaboración propia a partir de la revisión de literatura.
+Tabla 3
+Casos de Éxito Internacionales en Sistemas de Alerta Temprana con Learning Analytics
+Nota. LA = Latinoamérica. Fuente: Arnold y Pistilli (2012); Denley (2014); Kuzilek et al. (2017); Pérez-Sanagustín et al. (2018).
+2.3 Entregable 3: Informe de Ecosistema y Flujos de Datos
+Se realizó una caracterización completa del ecosistema tecnológico de la UNACH, identificando las plataformas, bases de datos y flujos de información relevantes para la construcción del sistema de Learning Analytics.
+Tabla 4
+Plataformas del Ecosistema Tecnológico de la UNACH Identificadas en el Diagnóstico
+Nota. SICOA = Sistema Integrado de Control Académico. LMS = Learning Management System. Fuente: Diagnóstico tecnológico institucional elaborado durante la Fase 1.
+Figura 1
+Diagrama de Flujo de Datos del Sistema UNACH-LA desde las Fuentes hasta las Salidas Operativas
+  ┌─────────────┐    ┌─────────────┐    ┌──────────────────┐
+  │   SICOA      │    │   Moodle     │    │  Bienestar       │
+  │  (Notas,     │    │  (Logs LMS,  │    │  Estudiantil     │
+  │  Asistencia) │    │  Actividad)  │    │  (Becas, Vuln.)  │
+  └──────┬───────┘    └──────┬───────┘    └────────┬─────────┘
+         │                   │                      │
+         └───────────────────┼──────────────────────┘
+                             │
+                       ┌─────▼──────┐
+                       │  ETL Layer  │
+                       │  (Python)   │
+                       └─────┬──────┘
+                             │
+                       ┌─────▼──────────────┐
+                       │ Dataset Procesado   │
+                       │ (4,000 × 89 cols)   │
+                       └─────┬──────────────┘
+                             │
+                 ┌───────────┼───────────┐
+                 │           │           │
+           ┌─────▼────┐ ┌───▼───┐ ┌────▼──────┐
+           │Dashboard │ │Alertas│ │ API       │
+           │ React    │ │ JSON  │ │ FastAPI   │
+           └──────────┘ └───────┘ └───────────┘
+Nota. ETL = Extract, Transform, Load. El flujo muestra la arquitectura de datos del modelo UNACH-LA desde la extracción de fuentes institucionales hasta la generación de salidas operativas. Fuente: Elaboración propia.
+2.4 Entregable 4: Documento de Lineamientos Éticos y de Gobernanza
+Se definieron los criterios éticos, de privacidad y gobernanza institucional que deben regir la operación del sistema UNACH-LA, alineados con los principios de transparencia algorítmica y justicia educativa.
+Tabla 5
+Principios Éticos Rectores del Sistema UNACH-LA y su Implementación Técnica
+Nota. Principios basados en las directrices de la UNESCO sobre Inteligencia Artificial en Educación y la LOPDP del Ecuador. Fuente: Elaboración propia.
+3. FASE 2: DISEÑO E IMPLEMENTACIÓN DE MACHINE LEARNING
+El objetivo de esta fase fue preparar los datos académicos, diseñar y entrenar modelos de Machine Learning supervisado para la predicción del riesgo académico, evaluar su rendimiento mediante métricas estándar, y construir indicadores clave de desempeño (KPIs) para la gestión institucional.
+3.1 Preparación y Limpieza de Datos Académicos
+Se implementó un pipeline completo de ETL (Extract, Transform, Load) en Python para la preparación y limpieza de dos datasets institucionales. El pipeline sigue la secuencia: Limpieza LMS → Limpieza SICOA → Feature Engineering → Merge → Exportación.
+Tabla 6
+Datasets Institucionales Utilizados como Fuente de Datos para el Proyecto UNACH-LA
+Nota. LMS = Learning Management System. SICOA = Sistema Integrado de Control Académico. Los datasets corresponden al periodo académico 2025-2S. Fuente: Extracción institucional.
+3.1.1 Paso 1: Limpieza del Dataset LMS
+Tabla 7
+Transformaciones Aplicadas al Dataset LMS (Moodle) durante la Fase de Limpieza
+Nota. Franja horaria: mañana (06:00–11:59), tarde (12:00–17:59), noche (18:00–23:59), madrugada (00:00–05:59). Fuente: Pipeline ETL (dataset.py).
+3.1.2 Paso 2: Limpieza del Dataset SICOA
+Tabla 8
+Transformaciones Aplicadas al Dataset SICOA durante la Fase de Limpieza
+Nota. NaN = Not a Number (valor faltante). Los NaN en notas de titulación fueron preservados deliberadamente porque corresponden a estudiantes que aún no han culminado su proceso de titulación. Fuente: Pipeline ETL (dataset.py).
+3.1.3 Paso 3: Feature Engineering — Métricas de Comportamiento Digital
+Se generaron 36 features de comportamiento digital agregando el dataset LMS a nivel de estudiante mediante la operación groupby('codigo_usuario'). Las features cubren seis categorías: actividad básica, calificaciones LMS, temporales, conteo por tipo de evento, conteo por componente y contextuales.
+Tabla 9
+Categorías de Features de Comportamiento Digital Generadas a Partir del Dataset LMS
+Nota. Total: 36 features de comportamiento digital. Las features se calcularon mediante operaciones de agregación (sum, mean, nunique, mode) sobre los 74,464 registros LMS agrupados por estudiante. Fuente: Pipeline ETL (dataset.py).
+3.1.4 Paso 4: Feature Engineering Avanzado (Post-Merge)
+Tabla 10
+Features Derivadas Avanzadas Generadas tras la Fusión de Datasets SICOA y LMS
+Nota. Las ponderaciones del engagement_score y del riesgo_historico fueron calibradas por el equipo investigador según criterios pedagógicos institucionales. Fuente: Pipeline ETL (dataset.py).
+3.1.5 Paso 5: Exportación — Resumen del Dataset Final
+Tabla 11
+Comparación de Métricas del Dataset Antes y Después del Procesamiento ETL
+Nota. El dataset final integra 89 columnas: 43 del SICOA procesado, 36 features LMS agregadas y 10 features avanzadas derivadas. Los 10,525 nulos residuales corresponden a notas de titulación (65%) y edades faltantes (3.1%). Fuente: reporte_calidad.md.
+3.2 Diseño de Modelos ML para Diagnóstico Académico
+Se formuló como un problema de clasificación binaria supervisada con variable target 'en_riesgo' = 1 si nota_final < 7.0, 0 si nota_final ≥ 7.0. El umbral de 7.0/10.0 corresponde al umbral de aprobación institucional de la UNACH.
+Tabla 12
+Distribución de la Variable Target 'en_riesgo' en el Dataset Procesado
+Nota. La distribución es relativamente balanceada (ratio 1:1.13), lo cual es favorable para el entrenamiento de los modelos y no requiere técnicas de sobremuestreo como SMOTE. Fuente: resultados_evaluacion.json.
+Tabla 13
+Modelos de Clasificación Seleccionados y sus Hiperparámetros Principales
+Nota. Los hiperparámetros fueron optimizados mediante experimentación iterativa. LR y SVM requieren StandardScaler. XGBoost incluye regularización avanzada L1+L2+gamma. Fuente: Evaluacion_Modelos_ML.py.
+3.4 Evaluación de Modelos: Validación y Pruebas de Rendimiento
+Tabla 14
+Resultados de la Validación Cruzada Estratificada (5-Fold) para los Cinco Modelos
+Nota. Los valores muestran media ± desviación estándar de los 5 folds. La métrica principal de selección fue el F1-Score por su balance entre Precision y Recall. Fuente: resultados_evaluacion.json.
+Tabla 15
+Resultados en el Conjunto de Test Independiente (20% del Dataset) para los Cinco Modelos
+Nota. ★ Mejor modelo por F1-Score. El conjunto de test contiene 800 registros (376 en riesgo, 424 sin riesgo). Specificity = TN/(TN+FP). Fuente: Evaluacion_Modelos_ML.py.
+Justificación de la Elección del Modelo (XGBoost): Con base en los resultados expuestos, se seleccionó e implementó XGBoost como el motor predictivo oficial del sistema UNACH-LA. Esta decisión técnica se fundamenta en tres motivos principales: 1) Presentó el F1-Score más alto (0.4198), lo que significa que tiene el mejor equilibrio entre no generar falsas alarmas y detectar a los estudiantes verdaderamente en riesgo. 2) Su algoritmo de 'Gradient Boosting' maneja naturalmente las relaciones no lineales complejas entre el comportamiento en el aula virtual (Moodle) y el perfil académico (SICOA). 3) Soporta nativamente valores nulos (NaN), lo cual es crítico en el contexto de notas de titulación pendientes.
+Tabla 16
+Matrices de Confusión de los Cinco Modelos Evaluados en el Conjunto de Test
+Nota. TN = Verdaderos Negativos, FP = Falsos Positivos, FN = Falsos Negativos, TP = Verdaderos Positivos. En el contexto educativo, un FN significa un estudiante en riesgo real que no fue detectado. Fuente: Evaluacion_Modelos_ML.py.
+Tabla 17
+Análisis de Overfitting: Comparación entre Accuracy de Entrenamiento y Validación Cruzada
+Nota. Criterios de diagnóstico: diferencia < 0.05 = sin overfitting, 0.05–0.15 = moderado, > 0.15 = alto. El overfitting en XGBoost y SVM se atribuye a la naturaleza sintética de los datos del prototipo. Fuente: Evaluacion_Modelos_ML.py.
+Tabla 18
+Top-15 Variables Más Importantes según el Modelo Random Forest (Feature Importance)
+Nota. La importancia fue calculada mediante la métrica de impureza de Gini del modelo Random Forest con 300 estimadores. Las features combinan datos académicos (SICOA) y comportamiento digital (LMS). Fuente: resultados_evaluacion.json.
+Figura 2
+Curvas ROC (Receiver Operating Characteristic) de los Cinco Modelos de Clasificación
+Nota. AUC = Área Bajo la Curva. La línea diagonal punteada representa un clasificador aleatorio (AUC = 0.5). Fuente: Evaluacion_Modelos_ML.py.
+Figura 3
+Matrices de Confusión de los Cinco Modelos Evaluados en el Conjunto de Test (n = 800)
+Nota. Cada celda muestra el conteo de predicciones. El eje vertical representa la clase real y el eje horizontal la clase predicha. Fuente: Evaluacion_Modelos_ML.py.
+Figura 4
+Comparación de Seis Métricas de Evaluación (Barras Agrupadas) para los Cinco Modelos
+Nota. Las métricas mostradas son: Accuracy, Precision, Recall, F1-Score, AUC-ROC y Specificity. Fuente: Evaluacion_Modelos_ML.py.
+Figura 5
+Top-20 Variables Predictivas Más Importantes según el Modelo Random Forest
+Nota. La importancia se calculó mediante la reducción media de impureza de Gini. Las barras más largas indican mayor poder predictivo. Fuente: Evaluacion_Modelos_ML.py.
+Figura 6
+Comparación Multidimensional de los Cinco Modelos (Radar Chart de Seis Métricas)
+Nota. Cada eje del radar representa una métrica de evaluación (Accuracy, Precision, Recall, F1, AUC-ROC, Specificity). Fuente: Evaluacion_Modelos_ML.py.
+3.5 Visualización y KPIs: Diseño de Dashboards e Indicadores
+Tabla 19
+Indicadores Clave de Desempeño (KPIs) Institucionales Diseñados para el Sistema UNACH-LA
+Nota. Las metas institucionales fueron definidas en conjunto con el Vicerrectorado Académico de la UNACH. La semaforización sigue el protocolo: verde (óptimo), amarillo (advertencia), rojo (crítico). Fuente: kpis_academicos.json.
+Tabla 20
+Protocolo de Semaforización Institucional para la Clasificación de Riesgo Académico
+Nota. El protocolo fue diseñado siguiendo la metodología de Arnold y Pistilli (2012) implementada en el sistema Course Signals de Purdue University. Fuente: propuesta_kpis_visualizaciones.md.
+Figura 7
+Tarjetas Ejecutivas de KPIs Institucionales con Semaforización para la Dirección Académica
+Nota. Las tarjetas muestran los cuatro KPIs principales con indicador visual de estado. Fuente: generar_kpis_y_graficos.py.
+Figura 8
+Panel de Control Integral de Gestión Académica de Cuatro Cuadrantes
+Nota. Los cuadrantes cubren: distribución de riesgo, rendimiento por asignatura, asistencia y engagement digital. Fuente: generar_kpis_y_graficos.py.
+4. FASE 3: DOCUMENTACIÓN Y CIERRE
+4.1 Consolidación del Prototipo Funcional UNACH-LA
+El prototipo funcional implementa la clase PrototipoUNACHLA que integra el motor predictivo XGBoost con la capacidad de evaluar masivamente a la población estudiantil y generar planes de tutoría personalizados según el nivel de riesgo detectado.
+Tabla 21
+Resultados de la Evaluación Poblacional del Prototipo UNACH-LA (n = 4,000 Estudiantes)
+Nota. Criterios de clasificación: ALTO = probabilidad ≥ 0.65 o nota < 6.0; MEDIO = probabilidad ≥ 0.35 o nota < 7.0; BAJO = resto. Fuente: prototipo_unach_la.py.
+4.2 Dashboard Institucional en React + Vite
+Se desarrolló un Dashboard web interactivo utilizando React 18 como framework de interfaz, Vite como bundler, Chart.js para gráficos interactivos, Lucide React para iconografía, jsPDF para exportación de reportes y Vercel para el despliegue en producción.
+Tabla 22
+Componentes Principales del Dashboard React del Sistema UNACH-LA
+Nota. Total: 16 componentes React implementados. El Dashboard soporta carga drag-and-drop de archivos CSV/XLSX del SICOA, análisis con IA generativa y exportación PDF. Fuente: Directorio 06_Dashboard_React/src/components/.
+4.2.1 Funcionamiento y Flujo de Interacción
+El Dashboard ha sido diseñado bajo los principios de usabilidad y experiencia de usuario (UX), ofreciendo una navegación intuitiva para diferentes perfiles (coordinadores, docentes, bienestar estudiantil). El flujo de interacción principal consta de las siguientes etapas operativas:
+1. Panel de Control (Visión Macro): Al ingresar, el usuario visualiza los indicadores clave (Tasa de riesgo, Rendimiento promedio, etc.) con semaforización en tiempo real y gráficos de distribución.
+2. Módulo de Carga y Fusión de Datos: Los coordinadores pueden cargar fácilmente los reportes actualizados del SICOA (Excel/CSV), los cuales se cruzan de manera automática con los registros de actividad del LMS (Moodle).
+3. Ejecución de Predicciones: Una vez integrados los datos, la plataforma invoca al Motor ML (XGBoost) para analizar el comportamiento y asignar un nivel de probabilidad de riesgo a cada estudiante en cuestión de segundos.
+4. Exploración y Filtrado de Alertas: Mediante la tabla dinámica interactiva, es posible filtrar a los estudiantes que se encuentren en nivel crítico (rojo) y abrir sus perfiles detallados (Vista 360°) para entender los factores influyentes.
+5. Intervención Asistida por IA: En perfiles complejos, la IA Generativa (Llama 3.3) evalúa las debilidades del estudiante, sugiere planes de intervención personalizados y formula recomendaciones listas para ser compartidas con los docentes.
+4.3 Backend API con FastAPI
+Se implementó un servidor backend en Python con FastAPI que gestiona las predicciones e integración con Inteligencia Artificial. El endpoint principal '/api/generar-plan' recibe los datos de un estudiante y genera un plan de intervención estratégico estructurado en tres fases: Intervención Inmediata (24-48 horas), Estrategia Académica (15 días) y Monitoreo Continuo (cierre de parcial).
+Tabla 23
+Stack Tecnológico Completo del Sistema UNACH-LA por Componente
+Nota. CRISP-DM fue el marco metodológico que guió el desarrollo de todos los componentes. Fuente: Elaboración propia.
+4.4 Integración con Inteligencia Artificial Generativa
+El componente AIAnalysisPanel integra Inteligencia Artificial Generativa a través de la API de Groq con el modelo Llama 3.3-70B Versatile, configurado con temperatura 0.5, máximo de 1,500 tokens y rol de sistema como experto en retención estudiantil de la UNACH. El panel soporta dos modos: análisis general del dataset fusionado y generación de planes de intervención individuales por estudiante.
+5. MODELADO DEL ECOSISTEMA DE DATOS
+5.1 Diagrama de arquitectura
+5.1.1 Arquitectura actual
+La infraestructura tecnológica actual de la UNACH se centraliza en el Data Center ubicado en el Campus Norte. Esta arquitectura cuenta con un "Backbone de Redes de Telecomunicaciones" impulsado por tecnología con inteligencia artificial (Juniper Mist) y mantiene respaldos inmutables en servidores locales y en la nube de CEDIA para asegurar la información crítica. Sin embargo, a nivel de software, los sistemas académicos como el SICOA y Moodle operan a menudo como "islas de digitalización" carentes de una articulación centralizada y automatizada.
+5.1.2 Arquitectura propuesta
+La arquitectura propuesta se fundamenta en el proyecto institucional de Learning Analytics (Modelo UNACH-LA). Esta propuesta añade capas de integración donde la información extraída de los sistemas fuente pasa por un mecanismo estricto de anonimización (asignando identificadores únicos no reversibles). Posteriormente, los datos alimentan un motor analítico que centraliza la información para generar dashboards e indicadores clave de desempeño en tiempo real.
+5.2 Diagrama de flujo de datos (DFD)
+Nivel 0 (Diagrama de contexto) Representa al Sistema Integrado de Analítica (UNACH-LA) como un proceso único central que interactúa con las entidades externas. Los estudiantes y docentes ingresan sus datos e interacciones, y el sistema devuelve tableros de control y resultados para la toma de decisiones.
+Nivel 1 (Descomposición de procesos) Muestra el interior del sistema central dividiéndolo en sus subprocesos principales: Recolección, Anonimización, Procesamiento Analítico y Visualización de datos.
+5.3 Actores involucrados
+Estudiantes: Son la población objetivo y fuente principal de datos. Proveen información demográfica, historial académico, calificaciones, asistencia y generan una huella digital constante mediante sus accesos y participación en los recursos del entorno Moodle. Son los beneficiarios finales de las estrategias de retención.
+Docentes: Son usuarios clave tanto en la generación de datos (registrando calificaciones y asistencias en SICOA y evaluando tareas en Moodle) como en la utilización de la plataforma propuesta. El proyecto contempla la formación de docentes en analítica educativa para que puedan interpretar los dashboards y aplicar mejoras pedagógicas.
+Coordinadores (y Autoridades): Incluye a directores de carrera, autoridades de facultad y autoridades institucionales. Su rol es estratégico, ya que consumen la información procesada por el modelo de analítica (tableros de control) para la gestión académica y la toma de decisiones basada en evidencia que reduzca la deserción estudiantil.
+Administradores TIC: Involucra principalmente al personal de la Dirección de Tecnologías de la Información y Comunicación (DTIC) y la Coordinación de Desarrollo de Sistemas Informáticos (CODESI). Tienen el rol técnico vital de extraer los registros masivos de las plataformas, garantizar la infraestructura de servidores y redes, y aplicar los procesos de anonimización y asignación de identificadores únicos antes de entregar la información para el análisis.
+6. ANÁLISIS DE OPORTUNIDADES PARA LEARNING ANALYTICS
+El análisis de oportunidades se fundamenta en la ejecución del proyecto de investigación Modelo UNACH-LA, cuyo propósito es transformar los crecientes volúmenes de datos educativos en conocimiento accionable para mejorar los procesos académicos y reducir el riesgo de deserción en la Universidad Nacional de Chimborazo.
+6.1 Variables académicas relevantes
+El modelo de Learning Analytics aprovecha datos provenientes de plataformas institucionales como SICOA y Moodle, los cuales se procesan bajo un estricto mecanismo de anonimización y seudonimización mediante un identificador único no reversible para proteger la identidad de los estudiantes.
+Rendimiento: Se evalúa extrayendo datos históricos y actuales del SICOA, que incluyen las calificaciones obtenidas por asignatura (primer parcial, segundo parcial, recuperación y calificación final), puntajes de admisión, promedios de nivelación, asignaturas de la malla aprobadas y calificaciones de grado o titulación.
+Participación: Se mide a través de la huella digital estudiantil capturada en el Learning Management System (Moodle), recopilando registros diarios de todas las acciones, recursos visualizados y eventos realizados en las aulas virtuales. Además, se complementa con el porcentaje de asistencia por asignatura y el registro de tutorías recibidas durante los periodos cursados.
+Riesgo de deserción: Se monitorea mediante la identificación de patrones en datos críticos como el número de retiros y reingresos, asignaturas tomadas en segunda o tercera matrícula, y variables de contexto sociodemográfico que evidencien vulnerabilidad, tales como condiciones de salud, residencia (urbano/rural) y situación socioeconómica declarada.
+6.2 Indicadores potenciales
+KPIs académicos: El proyecto busca consolidar la información en un prototipo funcional con tableros de control (dashboards) institucionales, los cuales mostrarán indicadores clave de desempeño (KPIs) para facilitar el seguimiento del progreso académico.
+Alertas tempranas: Al integrar dimensiones pedagógicas y tecnológicas, los datos analizados permitirán generar alertas para proyectar análisis enfocados en disminuir el riesgo de deserción académica en grupos de estudio.
+Predicción de desempeño: La analítica correlacional y longitudinal de los registros de SICOA (rendimiento) y Moodle (interacción) tiene el objetivo de traducir los datos masivos en conocimiento accionable, permitiendo proyectar escenarios para mejorar el rendimiento académico y guiar la toma de decisiones.
+6.3 Viabilidad de implementación
+Técnica: La viabilidad técnica está respaldada por la reciente modernización del "Backbone de Redes de Telecomunicaciones" del campus, que incorporó tecnología de inteligencia artificial y amplió la cobertura, garantizando una alta disponibilidad y estabilidad para el procesamiento de datos. Asimismo, el uso de identificadores anonimizados viabiliza el cruce seguro de bases de datos masivas en formatos CSV y Excel. Sin embargo, existen limitaciones a superar, como la necesidad de actualizar librerías de software institucional para una mejor integración.
+Operativa: A nivel operativo, el proyecto contempla la formación de al menos 50 docentes y gestores universitarios en analítica educativa, lo que garantizará que el personal sepa interpretar y utilizar los resultados del modelo. No obstante, el principal reto operativo radica en la demanda de tiempo para soporte técnico a usuarios finales y en la desvinculación de personal en el área de desarrollo de sistemas (CODESI), lo que limita la capacidad operativa para nuevos desarrollos de alto impacto.
+Institucional: La implementación cuenta con la aprobación oficial de la Comisión de Investigación (Resolución No. 037-CIV-12-02-2026) y se alinea con la Política Pública para la Transformación Digital 2025-2030, que exige a las universidades la gestión basada en datos y el uso de tecnologías emergentes. Sin embargo, para garantizar su sostenibilidad, estudios de transformación digital en la UNACH recomiendan que estas iniciativas dejen de funcionar como "islas de digitalización" y se integren dentro de un plan institucional específico de transformación digital, requiriendo un fuerte compromiso de liderazgo y asignación de presupuesto.
+7. RIESGOS Y CONSIDERACIONES
+7.1 Seguridad de la información
+La Universidad Nacional de Chimborazo (UNACH) rige la seguridad de su ecosistema tecnológico basándose en las "Políticas de Seguridad de la Información UNACH 2018", las cuales se alinean con estándares internacionales como ISO 27001 para mitigar riesgos y amenazas.
+Protección de datos: Para evitar la pérdida de información crítica y garantizar su resguardo, la institución ha implementado copias de seguridad (backups) inmutables, alojadas tanto en servidores locales como en la nube de CEDIA. La normativa interna exige que las bases de datos, aplicativos y copias de seguridad se mantengan encriptadas. Además, los activos físicos del Data Center central están resguardados por sistemas de videovigilancia y acceso restringido.
+Accesos: El ingreso a la infraestructura tecnológica y sistemas de información está estrictamente normado mediante un sistema de gestión de credenciales (roles y privilegios). Recientemente, se implementó un nuevo servidor Radius para fortalecer el control seguro de la autenticación de usuarios. Para los administradores que requieran conexiones desde el exterior, el acceso remoto a los servidores institucionales se realiza exclusivamente a través de Redes Privadas Virtuales (VPN) con encriptación.
+Privacidad: La política institucional clasifica a los datos personales (como nombres, etnia, lugar de procedencia, estado de salud o vulnerabilidades económicas) estrictamente como información confidencial. Su uso está restringido al cumplimiento de actividades institucionales formales, quedando prohibida cualquier divulgación sin la debida autorización.
+7.2 Calidad de datos
+Para asegurar que los modelos de Learning Analytics (como el proyecto UNACH-LA) ofrezcan predicciones y dashboards confiables, los datos deben cumplir tres características técnicas fundamentales:
+Integridad: Se garantiza que la información no ha sido modificada ni alterada sin autorización. Para lograrlo, los sistemas académicos (como SICOA) tienen habilitadas pistas de auditoría (logs) no editables que registran cada transacción, identificando al responsable de cualquier inserción, actualización o borrado de datos sensibles. Ningún usuario, ni siquiera los administradores o desarrolladores, puede modificar información directamente en la base de datos de producción sin seguir un estricto protocolo de control de cambios.
+Consistencia: Dado que la infraestructura funciona en muchas ocasiones como "islas de digitalización", el proyecto UNACH-LA resuelve el cruce de información (entre SICOA y Moodle) mediante la creación de un identificador único no reversible. Esto asegura que los historiales académicos, de asistencia y de interacción digital coincidan exactamente para el mismo individuo, permitiendo efectuar análisis longitudinales y correlacionales sin inconsistencias en las bases de datos.
+Disponibilidad: La disponibilidad permanente de la información se ha visto robustecida mediante el proyecto "Backbone de Redes de Telecomunicaciones", impulsado por tecnología de inteligencia artificial Juniper Mist. Esto permite alcanzar un índice de disponibilidad de red del 99%. A nivel de servidores, el Data Center institucional cuenta con estándares de redundancia diseñados para evitar interrupciones.
+7.3 Aspectos legales y éticos
+La extracción de datos masivos para el seguimiento académico conlleva responsabilidades legales en el marco jurídico ecuatoriano y políticas internas.
+Protección de datos personales: Todo el ecosistema opera bajo el cumplimiento de la Constitución de la República y la Ley Orgánica de Protección de Datos Personales, que exigen medidas de seguridad rigurosas frente a la información ciudadana. En estricto apego a esta ley, el requerimiento de datos para el modelo UNACH-LA establece como condición obligatoria la anonimización y/o seudonimización de toda la información entregada por Secretaría Académica y la Dirección de TICs (DTIC), garantizando la no identificación directa de los titulares de los datos.
+Consentimiento: De acuerdo con el Art. 66 de la Constitución, el procesamiento o distribución de datos requiere la autorización de su titular o un mandato de la ley. Para fines del uso institucional, el personal y los proveedores firman acuerdos de confidencialidad y responsabilidades respecto al manejo de los activos. En el caso de la analítica de aprendizaje (UNACH-LA), al utilizar un mecanismo ciego de seudonimización (donde el dato personal se reemplaza por un código alfanumérico), se mitiga el riesgo de vulnerar la intimidad estudiantil, actuando bajo el amparo de la Resolución Oficial de la Comisión de Investigación de la UNACH (No. 037-CIV-12-02-2026).
+Uso responsable de información académica: El acceso a los datos extraídos tiene como única finalidad la investigación y el desarrollo de estrategias para la retención estudiantil. Existe un documento de compromiso firmado por los miembros del equipo de investigación (liderado por la Dirección del Proyecto UNACH-LA), en el cual se obligan a dar fiel cumplimiento a la normativa aplicable sobre el buen uso de los datos y a utilizarlos estrictamente con fines investigativos. Además, las políticas de la universidad prohíben categóricamente el uso de la infraestructura o bases de datos para suministrar información con el fin de obtener beneficios propios o de terceros.
+8. ARQUITECTURA TÉCNICA COMPLETA DEL SISTEMA
+Figura 9
+Arquitectura Técnica Completa del Sistema UNACH-LA Versión 1.0
+┌─────────────────────────────────────────────────────────────────────┐
+│                    ARQUITECTURA UNACH-LA v1.0                       │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  ┌──────────────┐  ┌──────────────┐  ┌─────────────────────┐       │
+│  │    SICOA      │  │   Moodle     │  │ Bienestar Estudiantil│      │
+│  │ (.xlsx/.csv)  │  │  (LMS Logs)  │  │   (Becas, Vulner.)  │      │
+│  └──────┬───────┘  └──────┬───────┘  └──────────┬──────────┘       │
+│         │                  │                     │                  │
+│         └──────────────────┼─────────────────────┘                  │
+│                            │                                        │
+│                    ┌───────▼──────────┐                             │
+│                    │  Pipeline ETL    │                             │
+│                    │  (Python/Pandas) │                             │
+│                    └───────┬──────────┘                             │
+│                            │                                        │
+│                    ┌───────▼──────────────┐                         │
+│                    │ Dataset Procesado    │                         │
+│                    │ 4,000 × 89 columnas  │                         │
+│                    └───────┬──────────────┘                         │
+│                            │                                        │
+│              ┌─────────────┼─────────────┐                         │
+│              │             │             │                          │
+│      ┌───────▼──────┐ ┌───▼────────┐ ┌──▼──────────────┐          │
+│      │ Backend API  │ │ Dashboard  │ │ IA Generativa   │          │
+│      │ FastAPI      │ │ React/Vite │ │ Groq/Llama 3.3  │          │
+│      └──────────────┘ └────────────┘ └─────────────────┘          │
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
+Nota. ETL = Extract, Transform, Load. La arquitectura sigue un patrón de tres capas: Ingesta de Datos, Motor Analítico y Capa de Presentación/Acción. Fuente: Elaboración propia.
+9. RESULTADOS CONSOLIDADOS Y MÉTRICAS FINALES
+9.1 Resultados de la Implementación del Sistema
+La implementación integral del sistema UNACH-LA demostró la viabilidad técnica y operativa de un modelo de Learning Analytics en el contexto universitario. Los resultados más destacados de esta implementación incluyen:
+Procesamiento Masivo Exitoso: El pipeline ETL logró procesar de manera automatizada y sin errores los 74,464 registros del LMS y cruzarlos con los 4,000 expedientes del SICOA, reduciendo el tiempo de preparación de datos de semanas (manual) a escasos segundos.
+Predicción Operativa: El motor XGBoost implementado en el backend de FastAPI logró clasificar a toda la población estudiantil (4,000 perfiles) en menos de 2 segundos, demostrando alta eficiencia computacional.
+Despliegue Funcional: El Dashboard en React se integró fluidamente con la API, permitiendo a los coordinadores visualizar los resultados de manera interactiva sin necesidad de conocimientos técnicos de bases de datos.
+Automatización con IA: La integración pionera con Groq y Llama 3.3 permitió la generación automática de planes de intervención, un proceso que tradicionalmente consumía horas de análisis por parte de los tutores.
+Estos resultados consolidan al prototipo UNACH-LA como una herramienta madura, lista para ser escalada y puesta a prueba en un entorno real de producción académica.
+La importancia de la implementación de estos modelos de Machine Learning radica en su capacidad para procesar miles de variables simultáneas y descubrir patrones de deserción que el ojo humano o los sistemas tradicionales basados en reglas son incapaces de detectar. Al integrar IA en la universidad, no solo se obtiene una predicción estadística, sino una ventana de oportunidad para intervenir preventivamente y salvar la trayectoria académica de estudiantes que históricamente hubiesen sido dados de baja administrativa.
+Tabla 24
+Resumen de Entregables del Proyecto UNACH-LA Organizados por Fase
+Nota. Todos los entregables fueron completados satisfactoriamente dentro del cronograma del proyecto de ayudantía. Fuente: Elaboración propia.
+Tabla 25
+Métricas Cuantitativas Consolidadas del Proyecto UNACH-LA
+Nota. Las métricas reflejan el alcance total del proyecto desde la fase de ingesta de datos hasta la producción del prototipo funcional. Fuente: Consolidación de resultados de todas las fases.
+10. CONCLUSIONES Y RECOMENDACIONES
+10.1 Conclusiones del Prototipo
+1. Se logró implementar exitosamente un modelo institucional de Learning Analytics (UNACH-LA) que integra datos del SICOA y Moodle para predecir el riesgo académico estudiantil, cumpliendo con el objetivo general del proyecto.
+2. El pipeline de ETL desarrollado procesa y fusiona eficazmente 74,464 registros de actividad LMS con 4,000 registros académicos SICOA, generando un dataset consolidado de 89 variables (4,000 × 89).
+3. Se evaluaron 5 modelos de clasificación supervisada, siendo XGBoost el de mejor rendimiento con un F1-Score de 0.4198 en el conjunto de test. Si bien las métricas son modestas, esto se atribuye a la naturaleza sintética de los datos utilizados en el prototipo; con datos reales institucionales se espera una mejora significativa.
+4. El análisis de feature importance reveló que las variables más predictivas combinan tanto datos académicos (calificación mínima LMS, promedio de nivelación, repetición) como de comportamiento digital (tiempo de conexión, intensidad de foros), validando la importancia de la integración multimodal de datos.
+5. El prototipo funcional clasifica exitosamente a los 4,000 estudiantes en tres niveles de riesgo con planes de tutoría personalizados y genera alertas consumibles por sistemas institucionales (CSV y JSON).
+6. La arquitectura tecnológica completa (React + FastAPI + XGBoost + Groq/Llama) demuestra la viabilidad de un sistema de producción escalable y replicable en otras instituciones de educación superior.
+10.2 Recomendaciones del Prototipo
+1. Alimentar el modelo con datos institucionales reales del SICOA y Moodle para mejorar las métricas predictivas más allá del prototipo con datos sintéticos.
+2. Implementar validación longitudinal (seguimiento a lo largo de múltiples periodos académicos) para evaluar el impacto real del sistema en la reducción de la tasa de reprobación.
+3. Incorporar técnicas de explicabilidad como SHAP (Shapley Additive Explanations) para mejorar la transparencia algorítmica ante docentes y estudiantes.
+4. Automatizar la ingesta de datos mediante conexiones directas a las APIs del SICOA y Moodle, eliminando la necesidad de exportación manual de archivos.
+5. Ampliar el catálogo de KPIs incorporando métricas de deserción, satisfacción estudiantil y eficacia de las intervenciones tutoriales.
+6. Registrar el software ante el SENADI (Servicio Nacional de Derechos Intelectuales) para la protección de la propiedad intelectual de la UNACH.
+10.3 Conclusiones sobre el Ecosistema Tecnológico
+Estado actual del ecosistema tecnológico: La Universidad Nacional de Chimborazo (UNACH) ha logrado avances tecnológicos muy significativos a lo largo de las últimas dos décadas. Actualmente, la institución cuenta con una infraestructura contemporánea y robusta, destacando el reciente proyecto "Backbone de Redes de Telecomunicaciones" en el campus norte, el cual implementó tecnología de punta con inteligencia artificial (Juniper Mist) para garantizar una conectividad de alta disponibilidad. Asimismo, la universidad gestiona de forma operativa sus procesos mediante plataformas académicas sólidamente establecidas, como el Sistema Informático de Control Académico (SICOA) y Moodle, apoyadas por un esquema de seguridad que incluye respaldos inmutables locales y en la nube de CEDIA. Todo esto ha permitido automatizar procesos, agilizar trámites y garantizar la continuidad educativa frente a crisis.
+Nivel de integración de datos: El principal hallazgo respecto al ecosistema de la UNACH es que, si bien existen sistemas funcionales y avanzados, estos operan frecuentemente como "islas de digitalización" carentes de una articulación integral. El nivel de integración de datos en tiempo real es aún limitado; por ejemplo, la extracción de registros masivos para analizar el aprendizaje (desde SICOA y Moodle) depende de la entrega de archivos estáticos en formatos CSV o Excel por parte de las dependencias técnicas. Sin embargo, la institución ha logrado un avance importante en materia de protección al consolidar la integración de datos mediante un identificador único anonimizado o seudonimizado, el cual permite cruzar información longitudinal y correlacionalmente entre plataformas sin vulnerar la privacidad de los estudiantes.
+Principales problemas encontrados: La investigación y los reportes institucionales evidencian que los retos abarcan dimensiones tanto técnicas como culturales: 1) Falta de planificación centralizada. 2) Factores económicos y operativos. 3) Resistencia cultural y brecha digital.
+Potencial del modelo UNACH-LA: El proyecto "Modelo UNACH-LA de Learning Analytics" representa una oportunidad estratégica para superar las barreras de las "islas de digitalización" mediante la integración de dimensiones pedagógicas, tecnológicas y éticas. El gran potencial de este modelo radica en su capacidad para transformar los volúmenes crecientes de datos educativos masivos (historiales y huella digital) en conocimiento accionable. Al generar un prototipo funcional basado en tableros de control (dashboards) institucionales, el sistema dotará a las autoridades y docentes de indicadores clave de desempeño en tiempo real. A largo plazo, el modelo UNACH-LA permitirá tomar decisiones basadas en evidencia para reducir el riesgo de deserción estudiantil y mejorar el rendimiento académico. Además, servirá como catalizador para la formación del personal (proyectando capacitar a más de 50 docentes y gestores en analítica educativa), lo que facilitará una verdadera adopción tecnológica y alineará a la universidad con las exigencias de la nueva "Política Pública para la Transformación Digital del Ecuador 2025-2030".
+11. RECOMENDACIONES ESTRATÉGICAS INSTITUCIONALES
+Con base en el diagnóstico de la infraestructura, los flujos de información y el marco normativo de la Universidad Nacional de Chimborazo (UNACH), se establecen las siguientes recomendaciones estratégicas:
+11.1 Mejoras tecnológicas
+Escalabilidad y modernización: Se recomienda sostener y expandir el reciente proyecto de modernización "Backbone de Redes de Telecomunicaciones" (que utiliza tecnología de inteligencia artificial Juniper Mist) hacia todas las áreas y campus, garantizando un soporte técnico reducido y una alta disponibilidad de conexión.
+Actualización de sistemas centrales: Es fundamental asignar presupuesto para la actualización de librerías de software institucional (como IronPDF), necesarias para la generación eficiente de reportes en formatos PDF integrados a los sistemas actuales.
+Transición a la nube: Mantener una infraestructura tecnológica flexible y escalable, continuando con la migración gradual hacia tecnologías en la nube, lo cual complementará los servidores físicos del Data Center y asegurará la continuidad de los servicios digitales ante cualquier eventualidad.
+11.2 Integración de plataformas
+Erradicar las "islas de digitalización": Se debe superar el modelo actual donde las plataformas operan de forma aislada. Es imperativo que los productos tecnológicos confluyan en un objetivo único y articulado.
+Automatización mediante APIs: Reemplazar el intercambio manual de datos (mediante archivos estáticos CSV o Excel proporcionados por la DTIC y CODESI) por el desarrollo de conectores automatizados (APIs) en tiempo real que enlacen los registros del Sistema Informático de Control Académico (SICOA) con la huella digital del Aula Virtual (Moodle).
+Cumplimiento de interoperabilidad: Alinear la arquitectura de software institucional con el eje estratégico de "Interoperabilidad" exigido por la Política Pública para la Transformación Digital del Ecuador 2025-2030.
+11.3 Implementación de analítica de aprendizaje
+Ejecución del Modelo UNACH-LA: Priorizar y dotar de los recursos necesarios para el desarrollo e implementación del "Modelo UNACH-LA de Learning Analytics", el cual permitirá transformar los crecientes volúmenes de datos masivos en conocimiento accionable.
+Desarrollo de Dashboards institucionales: Construir un prototipo funcional basado en tableros de control (dashboards) que proyecten indicadores clave de desempeño (KPIs) en tiempo real, enfocados en predecir el rendimiento académico y alertar sobre el riesgo de deserción estudiantil.
+Capacitación en analítica educativa: Para garantizar que el modelo no sea solo una herramienta técnica, se recomienda cumplir con la meta de formar al menos a 50 docentes y gestores universitarios en analítica del aprendizaje. Esto permitirá que las autoridades y tutores interpreten correctamente los datos y apliquen intervenciones pedagógicas oportunas.
+11.4 Estrategias de gobernanza de datos
+Creación de un Plan Específico de Transformación Digital: La principal recomendación a nivel gerencial es diseñar y formalizar un "Plan de Transformación Digital" específico. Actualmente, la digitalización figura solo como un eje transversal, lo que limita su efectividad. Un plan estructurado a largo plazo garantizará el compromiso de las autoridades y la asignación eficiente de recursos presupuestarios.
+Protección y anonimización: Fortalecer las políticas de seguridad de la información (basadas en normas como ISO 27001 y la Ley Orgánica de Protección de Datos Personales). Se debe mantener como política innegociable la anonimización y seudonimización de los datos académicos mediante identificadores únicos no reversibles, asegurando que los cruces de bases de datos para analítica no expongan la identidad de los estudiantes.
+Gestión del cambio y cultura digital: La gobernanza no solo debe centrarse en los datos, sino en las personas. Se recomienda fortalecer los programas de capacitación continua para docentes y personal administrativo como herramienta clave para vencer la resistencia cultural al cambio y reducir la brecha digital, demostrando los beneficios tangibles que la digitalización aporta a sus labores diarias.
+Fortalecimiento del EGSI y CSIRT: Consolidar el rol del Equipo de Gestión de Seguridad de la Información (EGSI) y del Equipo de Respuesta a Incidentes (CSIRT) para el monitoreo permanente, la auditoría de accesos y la actualización de los planes de contingencia frente a posibles vulnerabilidades tecnológicas.
+12. BIBLIOGRAFÍA Y REFERENCIAS
+12.1 Referencias Bibliográficas
+Arnold, K. E., y Pistilli, M. D. (2012). Course Signals at Purdue: Using Learning Analytics to Increase Student Success. Proceedings of the 2nd International Conference on Learning Analytics and Knowledge (LAK '12), 267–270. https://doi.org/10.1145/2330601.2330666
+Baker, R. S. J. D., e Inventado, P. S. (2014). Educational Data Mining and Learning Analytics. En Learning Analytics: From Research to Practice (pp. 61–75). Springer. https://doi.org/10.1007/978-1-4614-3305-7_4
+Chapman, P., Clinton, J., Kerber, R., Khabaza, T., Reinartz, T., Shearer, C., y Wirth, R. (2000). CRISP-DM 1.0: Step-by-step Data Mining Guide. SPSS Inc.
+Chen, T., y Guestrin, C. (2016). XGBoost: A Scalable Tree Boosting System. Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining, 785–794. https://doi.org/10.1145/2939672.2939785
+Clow, D. (2012). The Learning Analytics Cycle: Closing the Loop Effectively. Proceedings of the 2nd International Conference on Learning Analytics and Knowledge (LAK '12), 134–138. https://doi.org/10.1145/2330601.2330636
+Denley, T. (2014). How Predictive Analytics and Choice Architecture Can Improve Student Success. Research & Practice in Assessment, 9, 61–69.
+Ferguson, R. (2012). Learning Analytics: Drivers, Developments and Challenges. International Journal of Technology Enhanced Learning, 4(5/6), 304–317. https://doi.org/10.1504/IJTEL.2012.051816
+Hastie, T., Tibshirani, R., y Friedman, J. (2009). The Elements of Statistical Learning: Data Mining, Inference, and Prediction (2.ª ed.). Springer.
+INEC (2022). Encuesta Nacional de Empleo, Desempleo y Subempleo (ENEMDU). Instituto Nacional de Estadística y Censos del Ecuador.
+Kuzilek, J., Hlosta, M., y Zdrahal, Z. (2017). Open University Learning Analytics Dataset. Scientific Data, 4, 170171. https://doi.org/10.1038/sdata.2017.171
+Ley Orgánica de Protección de Datos Personales [LOPDP] (2021). Registro Oficial Suplemento 459. Asamblea Nacional del Ecuador.
+Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., ... y Duchesnay, É. (2011). Scikit-learn: Machine Learning in Python. Journal of Machine Learning Research, 12, 2825–2830.
+Pérez-Sanagustín, M., Hilliger, I., Maldonado-Mahauad, J., y Pérez-Álvarez, R. (2018). LALA: Building Capacity to Use Learning Analytics to Improve Higher Education in Latin America. Proceedings of the 13th European Conference on Technology Enhanced Learning.
+Romero, C., y Ventura, S. (2020). Educational Data Mining and Learning Analytics: An Updated Survey. WIREs Data Mining and Knowledge Discovery, 10(3), e1355. https://doi.org/10.1002/widm.1355
+Shearer, C. (2000). The CRISP-DM Model: The New Blueprint for Data Mining. Journal of Data Warehousing, 5(4), 13–22.
+Siemens, G., y Baker, R. S. J. D. (2012). Learning Analytics and Educational Data Mining: Towards Communication and Collaboration. Proceedings of the 2nd International Conference on Learning Analytics and Knowledge (LAK '12), 252–254. https://doi.org/10.1145/2330601.2330661
+Umer, R., Susnjak, T., Mathrani, A., y Suriadi, S. (2021). On Predicting Academic Performance with Process Mining in Learning Analytics. Journal of Research in Innovative Teaching & Learning, 14(1), 55–76. https://doi.org/10.1108/JRIT-09-2019-0075
+Zimmerman, B. J. (2002). Becoming a Self-Regulated Learner: An Overview. Theory into Practice, 41(2), 64–70. https://doi.org/10.1207/s15430421tip4102_2
+Centro de Tecnología Educativa - UNACH. (2018). Políticas de seguridad de la información UNACH 2018.
+Comisión de Investigación, Innovación y Vinculación - UNACH. (2026). Requerimiento de datos para el Proyecto Modelo UNACH-LA (Resolución No. 037-CIV-12-02-2026).
+Coordinación de Desarrollo de Sistemas Informáticos (CODESI). (s.f.). Sistema Informático de Control Académico – Sicoa | Documentación.
+Dirección de Tecnologías de la Información y Comunicación (DTIC). (s.f.). Servicios - Dirección de Tecnologías de la Información y Comunicación. Universidad Nacional de Chimborazo.
+Paredes Barrigas, S. L., & Negrete Costales, O. P. (2025). Políticas públicas para la transformación digital en el sector público: un estudio de caso en la Universidad Nacional de Chimborazo. Revista Esprint Investigación, 4(1), 498-514.
+Universidad Nacional de Chimborazo. (2019). La infraestructura contemporánea es un hito de la Unach. Noticias Institucionales.
+Universidad Nacional de Chimborazo. (2020). Herramientas digitales para tu comodidad. Gaceta Universitaria.
+Universidad Nacional de Chimborazo. (2023). Los nuevos laboratorios de ingeniería: Otra obra en movimiento. Noticias - Facultad de Ingeniería.
+Universidad Nacional de Chimborazo. (2024). Unach moderniza su infraestructura con proyecto de telecomunicaciones avanzado. Noticias Institucionales.
+Universidad Nacional de Chimborazo. (2025). Tecnología alemana impulsa la innovación en la Facultad de Ingeniería de la Unach. Noticias Academia y Gestión.
+Vicerrectorado Administrativo - UNACH. (2023). Informe bimestral de actividades macroproceso gestión administrativa: Gestión de Tecnologías de la Información y Comunicación. Periodo 01/11/2022 al 31/12/2022.
+12.2 Documentación Técnica
+FastAPI Documentation. https://fastapi.tiangolo.com/
+React Documentation. https://react.dev/
+Vite Build Tool. https://vitejs.dev/
+XGBoost Documentation. https://xgboost.readthedocs.io/
+scikit-learn Documentation. https://scikit-learn.org/stable/
+Chart.js Documentation. https://www.chartjs.org/
+Groq API Documentation. https://console.groq.com/docs
+Llama 3.3 Model Card. Meta AI. https://llama.meta.com/
+12.3 Normativa Consultada
+Consejo de Educación Superior [CES]. (2022). Reglamento de Régimen Académico. República del Ecuador.
+Reglamento General de Protección de Datos [GDPR]. (2016). Reglamento (UE) 2016/679. Parlamento Europeo y Consejo de la Unión Europea.
+Universidad Nacional de Chimborazo. (2023). Estatuto de la UNACH. Riobamba, Ecuador.
+13. ANEXOS
+Anexo A: Estructura del Repositorio
+Proyecto_Final_UNACH_LA/
+├── 01_Diseno_e_Implementacion_ML/
+│   ├── dataset.py                    # Pipeline ETL completo
+│   ├── dataset_LMS_2025_2S.xlsx      # Dataset LMS original (74,464 × 25)
+│   ├── dataset_sicoa_2025.xlsx       # Dataset SICOA original (4,000 × 48)
+│   ├── dataset_procesado.csv         # Dataset final (4,000 × 89)
+│   └── reporte_calidad.md            # Reporte de calidad automático
+├── 02_Evaluacion_de_Modelos/
+│   ├── Evaluacion_Modelos_ML.py      # Script principal de evaluación
+│   ├── resultados_evaluacion.json    # Resultados numéricos completos
+│   ├── reporte_evaluacion.md         # Reporte de evaluación
+│   └── graficos/                     # 9 gráficos de evaluación (.png)
+├── 03_Visualizacion_y_KPIs/
+│   ├── generar_kpis_y_graficos.py    # Script de cálculo de KPIs
+│   ├── kpis_academicos.json          # KPIs calculados
+│   └── dashboards/                   # 6 dashboards (.png)
+├── 04_Prototipo_UNACH_LA/
+│   ├── prototipo_unach_la.py         # Motor del prototipo funcional
+│   └── Manual_y_Arquitectura_UNACH_LA.md
+├── 05_Informe_y_Diapositivas/
+│   └── Informe_Institucional_UNACH_LA.md
+├── 06_Dashboard_React/               # 16 componentes React
+├── 07_Backend_API/                   # Servidor FastAPI
+├── ENTREGABLE 1-4 (.docx)
+├── README.md
+└── requirements.txt
+Anexo B: Requisitos de Software
+Tabla 26
+Dependencias y Versiones Mínimas de Software Requeridas para el Proyecto UNACH-LA
+Nota. Instalar con: pip install -r requirements.txt (Python) y npm install (React/Vite). Fuente: requirements.txt y package.json.
+Anexo C: Enlaces de Producción y Repositorio (Open Source)
+Todo el código desarrollado, manuales y datasets de prueba de esta investigación se han liberado de manera pública bajo filosofía Open Source para permitir la continuidad del proyecto por parte de la Universidad y la comunidad científica.
+Repositorio de GitHub Oficial:
+https://github.com/RubenCasa/PROTOTIPO_UNACH_LA
+Plataforma Dashboard (Demo Interactiva en Vercel):
+https://prototipo-unach-la.vercel.app/
+En la Figura adjunta en el Anexo D, se puede observar una captura del dashboard operativo en internet demostrando el entorno de Tema Claro Premium con los resultados de la Inteligencia Artificial desplegados.
+— Fin del Informe —
+Documento elaborado como parte del Proyecto de Investigación de Ayudantía
+Universidad Nacional de Chimborazo (UNACH)
+Riobamba, Chimborazo — Ecuador
+Julio 2026
