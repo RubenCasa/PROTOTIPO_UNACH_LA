@@ -17,6 +17,7 @@ export default function Sidebar({ onBackToHero, activeSection, setActiveSection 
 
   const groupFusion = [
     { id: 'fusion', icon: FileUp, label: 'Fusión de Datos IA' },
+    { id: 'cohorte2025', icon: TrendingUp, label: 'Análisis Cohorte 2025' },
   ];
 
   return (

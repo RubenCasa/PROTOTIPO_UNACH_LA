@@ -7,6 +7,7 @@ import AlertsTable from './components/AlertsTable';
 import PredictionChart from './components/PredictionChart';
 import ModelPerformanceView from './components/ModelPerformanceView';
 import DataFusionView from './components/DataFusionView';
+import Cohorte2025View from './components/Cohorte2025View';
 import { AlertCircle } from 'lucide-react';
 
 function App() {
@@ -183,8 +184,15 @@ function App() {
           </section>
         )}
 
+        {/* Nueva Sección: Cohorte 2025 */}
+        {activeSection === 'cohorte2025' && (
+          <section id="cohorte2025" className="fade-in dashboard-section" style={{ borderBottom: 'none', padding: '2rem 0' }}>
+            <Cohorte2025View />
+          </section>
+        )}
+
         {/* Notificación Global si no hay datos fusionados para las otras secciones */}
-        {activeSection !== 'fusion' && activeSection !== 'modelo' && activeSection !== 'general' && activeSection !== 'alertas' && !globalFusedData && (
+        {activeSection !== 'fusion' && activeSection !== 'cohorte2025' && activeSection !== 'modelo' && activeSection !== 'general' && activeSection !== 'alertas' && !globalFusedData && (
           <div className="glass-panel fade-in" style={{ margin: '2rem 0', textAlign: 'center', padding: '3rem 1rem' }}>
             <AlertCircle size={48} color="var(--text-muted)" style={{ marginBottom: '1rem' }} />
             <h2 style={{ color: 'var(--text-main)', marginBottom: '0.5rem' }}>Faltan Datos Dinámicos</h2>
