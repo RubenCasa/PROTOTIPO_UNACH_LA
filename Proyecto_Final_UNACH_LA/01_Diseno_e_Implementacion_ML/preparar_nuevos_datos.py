@@ -6,8 +6,10 @@ import gc
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FILE_MATRICULADOS = os.path.join(BASE_DIR, "proyecto ML matriculados CD 2025 2S.xlsx")
 FILE_ANONIMIZADOS = os.path.join(BASE_DIR, "Registros_usuarios_anonimizados_final.xlsx")
+FILE_LMS = os.path.join(BASE_DIR, "dataset_LMS_2025_2S.xlsx")
 
 OUTPUT_SICOA = os.path.join(BASE_DIR, "SICOA_Anonimizado_Listo.csv")
+OUTPUT_MOODLE = os.path.join(BASE_DIR, "Moodle_Anonimizado_Listo.csv")
 
 def preparar_datos_sicoa():
     print("Iniciando preparación de SICOA (Matriculados)...")
@@ -83,7 +85,22 @@ def aplicar_diccionario_anonimizacion(archivo_entrada, archivo_salida, columna_i
     df_anon.to_csv(archivo_salida, index=False, encoding='utf-8')
     print(f"Archivo anonimizado exportado a: {archivo_salida}")
 
+def preparar_datos_moodle():
+    print("\nIniciando preparación de Moodle (LMS)...")
+    if not os.path.exists(FILE_LMS):
+        print(f"Error: No se encuentra el archivo {FILE_LMS}")
+        return
+        
+    print("Cargando archivo Excel de Moodle (esto puede tomar unos segundos)...")
+    df_lms = pd.read_excel(FILE_LMS)
+    print(f"Dataset Moodle cargado: {df_lms.shape}")
+    
+    # Exportar a CSV para lectura ultrarrápida en el Dashboard
+    df_lms.to_csv(OUTPUT_MOODLE, index=False, encoding='utf-8')
+    print(f"Archivo estandarizado guardado en: {OUTPUT_MOODLE}")
+
 if __name__ == '__main__':
     preparar_datos_sicoa()
-    print("\nEjemplo de uso de anonimizador:")
+    preparar_datos_moodle()
+    print("\n[Opcional] Ejemplo de uso de anonimizador profundo:")
     print("aplicar_diccionario_anonimizacion('logs_moodle_crudos.csv', 'Moodle_Anonimizado_Listo.csv', 'id_usuario')")
