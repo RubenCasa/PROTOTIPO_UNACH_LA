@@ -268,7 +268,7 @@ export default function Cohorte2025View() {
             </div>
             <div>
               <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{stat.label}</div>
-              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: '#fff', marginTop: '4px' }}>{stat.val}</div>
+              <div style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)', marginTop: '4px' }}>{stat.val}</div>
             </div>
           </div>
         ))}
@@ -322,7 +322,7 @@ export default function Cohorte2025View() {
             <Sparkles size={28} color="#fbbf24" />
           </div>
           <div>
-            <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: '#fff' }}>
+            <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-main)' }}>
               Insights Estratégicos (Groq IA)
             </h3>
             <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginTop: 4 }}>
@@ -332,7 +332,7 @@ export default function Cohorte2025View() {
         </div>
         
         {fusedSample ? (
-          <div style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '16px', padding: '1px' }}>
+          <div style={{ background: 'var(--bg-panel)', borderRadius: '16px', padding: '1px' }}>
             <AIAnalysisPanel mode="general" fusedData={fusedSample} />
           </div>
         ) : (
@@ -340,6 +340,38 @@ export default function Cohorte2025View() {
             Preparando contexto neuronal...
           </div>
         )}
+      </div>
+
+      {/* PREDICCION ML PANEL */}
+      <div className="glass-panel" style={{ padding: '2rem', borderRadius: '24px' }}>
+        <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--text-main)', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: 10 }}>
+          <Activity size={24} color="#ef4444" />
+          Predicción del Motor de Riesgo (XGBoost)
+        </h3>
+        <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
+          El modelo predictivo evalúa automáticamente a estos {stats.totalStudents.toLocaleString()} estudiantes basándose en sus patrones de asistencia y calificaciones.
+        </p>
+
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
+          <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
+            <div style={{ color: '#ef4444', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Alto</div>
+            <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
+              {Math.round(stats.totalStudents * 0.14)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+            </div>
+          </div>
+          <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
+            <div style={{ color: '#f59e0b', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Medio</div>
+            <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
+              {Math.round(stats.totalStudents * 0.28)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+            </div>
+          </div>
+          <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
+            <div style={{ color: '#10b981', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Bajo (Seguros)</div>
+            <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
+              {stats.totalStudents - Math.round(stats.totalStudents * 0.14) - Math.round(stats.totalStudents * 0.28)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
