@@ -65,19 +65,39 @@ export default function Cohorte2025View() {
       const sicoaCsv = await sicoaRes.text();
       const sicoaParsed = Papa.parse(sicoaCsv, { header: true, skipEmptyLines: true });
       
+      // Agrupar SICOA por estudiante único (ya que hay múltiples filas por materia)
+      const sicoaMap = {};
+      sicoaParsed.data.forEach(row => {
+        const id = row.ID_Estudiante;
+        if (!id) return;
+        if (!sicoaMap[id]) {
+          sicoaMap[id] = { id, sumAsist: 0, sumNota: 0, count: 0, Nivel: row.Nivel };
+        }
+        sicoaMap[id].sumAsist += parseFloat(row.TotalPorcentajeAsistencia) || 0;
+        sicoaMap[id].sumNota += parseFloat(row.PromedioFinalNumero) || 0;
+        sicoaMap[id].count += 1;
+      });
+
+      const uniqueSicoa = Object.values(sicoaMap).map(s => ({
+        ID_Estudiante: s.id,
+        TotalPorcentajeAsistencia: (s.sumAsist / s.count).toFixed(2),
+        PromedioFinalNumero: (s.sumNota / s.count).toFixed(2),
+        Nivel: s.Nivel
+      }));
+
       const moodleRes = await fetch('/datasets/Moodle_Anonimizado_Listo.csv');
       if (!moodleRes.ok) throw new Error("No se pudo cargar Moodle_Anonimizado_Listo.csv");
       const moodleCsv = await moodleRes.text();
       const moodleParsed = Papa.parse(moodleCsv, { header: true, skipEmptyLines: true });
 
-      setSicoaData(sicoaParsed.data);
+      setSicoaData(uniqueSicoa);
       setMoodleData(moodleParsed.data);
       
-      calculateStats(sicoaParsed.data, moodleParsed.data);
+      calculateStats(uniqueSicoa, moodleParsed.data);
       
       setFusedSample({
         columns: ['ID_Estudiante', 'PromedioFinalNumero', 'TotalPorcentajeAsistencia', 'Nivel', 'MoodleEventos'],
-        rows: sicoaParsed.data.slice(0, 30).map(row => ({
+        rows: uniqueSicoa.slice(0, 30).map(row => ({
           ID_Estudiante: row.ID_Estudiante,
           PromedioFinalNumero: row.PromedioFinalNumero,
           TotalPorcentajeAsistencia: row.TotalPorcentajeAsistencia,
