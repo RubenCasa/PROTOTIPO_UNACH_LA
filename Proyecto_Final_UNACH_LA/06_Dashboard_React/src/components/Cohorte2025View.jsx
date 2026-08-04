@@ -364,7 +364,7 @@ export default function Cohorte2025View() {
         {/* Gráfico 1 */}
         <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 24, borderRadius: 4, background: '#38bdf8' }}></div>
               Asistencia vs. Promedio
             </h3>
@@ -378,7 +378,7 @@ export default function Cohorte2025View() {
         {/* Gráfico 2 */}
         <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '24px', display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 24, borderRadius: 4, background: '#a855f7' }}></div>
               Top Interacciones LMS
             </h3>
@@ -392,7 +392,7 @@ export default function Cohorte2025View() {
         {/* Gráfico 3: CRUCE Moodle vs SICOA */}
         <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '24px', display: 'flex', flexDirection: 'column', gridColumn: '1 / -1' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: 'var(--text-main)', display: 'flex', alignItems: 'center', gap: 8 }}>
               <div style={{ width: 8, height: 24, borderRadius: 4, background: '#10b981' }}></div>
               Correlación Predictiva: Interacciones Moodle vs. Promedio SICOA
             </h3>
