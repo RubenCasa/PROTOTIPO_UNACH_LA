@@ -71,17 +71,27 @@ export default function Cohorte2025View() {
         const id = row.ID_Estudiante;
         if (!id) return;
         if (!sicoaMap[id]) {
-          sicoaMap[id] = { id, sumAsist: 0, sumNota: 0, count: 0, Nivel: row.Nivel };
+          sicoaMap[id] = { id, sumAsist: 0, sumNota: 0, countNota: 0, countAsist: 0, Nivel: row.Nivel };
         }
-        sicoaMap[id].sumAsist += parseFloat(row.TotalPorcentajeAsistencia) || 0;
-        sicoaMap[id].sumNota += parseFloat(row.PromedioFinalNumero) || 0;
-        sicoaMap[id].count += 1;
+        
+        const asist = parseFloat(row.TotalPorcentajeAsistencia) || 0;
+        const nota = parseFloat(row.PromedioFinalNumero) || 0;
+
+        // Solo sumar materias con datos reales (ignorar nulos que el backend rellenó con 0)
+        if (asist > 0) {
+          sicoaMap[id].sumAsist += asist;
+          sicoaMap[id].countAsist += 1;
+        }
+        if (nota > 0) {
+          sicoaMap[id].sumNota += nota;
+          sicoaMap[id].countNota += 1;
+        }
       });
 
       const uniqueSicoa = Object.values(sicoaMap).map(s => ({
         ID_Estudiante: s.id,
-        TotalPorcentajeAsistencia: (s.sumAsist / s.count).toFixed(2),
-        PromedioFinalNumero: (s.sumNota / s.count).toFixed(2),
+        TotalPorcentajeAsistencia: s.countAsist > 0 ? (s.sumAsist / s.countAsist).toFixed(2) : 0,
+        PromedioFinalNumero: s.countNota > 0 ? (s.sumNota / s.countNota).toFixed(2) : 0,
         Nivel: s.Nivel
       }));
 
