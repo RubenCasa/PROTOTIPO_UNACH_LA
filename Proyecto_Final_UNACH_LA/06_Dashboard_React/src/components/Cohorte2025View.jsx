@@ -25,6 +25,7 @@ import {
 } from 'chart.js';
 import { Scatter, Bar, Line } from 'react-chartjs-2';
 import AIAnalysisPanel from './AIAnalysisPanel';
+import { predictRisk } from '../utils/ml_model';
 
 ChartJS.register(
   CategoryScale,
@@ -50,6 +51,8 @@ export default function Cohorte2025View() {
     avgGrade: 0,
     totalMoodleEvents: 0
   });
+
+  const [mlStats, setMlStats] = useState({ high: 0, med: 0, low: 0 });
 
   const [fusedSample, setFusedSample] = useState(null);
 
@@ -130,12 +133,31 @@ export default function Cohorte2025View() {
     let validAtt = 0;
     let sumAtt = 0;
 
+    let high = 0, med = 0, low = 0;
+    
+    // Contar eventos Moodle por usuario para la predicción
+    const userMoodleEvents = moodle.reduce((acc, row) => {
+      const id = row.codigo_usuario;
+      if (id) acc[id] = (acc[id] || 0) + 1;
+      return acc;
+    }, {});
+
     sicoa.forEach(row => {
       const grade = parseFloat(row.PromedioFinalNumero);
       const att = parseFloat(row.TotalPorcentajeAsistencia);
+      
       if (!isNaN(grade)) { sumGrades += grade; validGrades++; }
       if (!isNaN(att)) { sumAtt += att; validAtt++; }
+      
+      // ML Inference
+      const moodleCount = userMoodleEvents[row.ID_Estudiante] || 0;
+      const risk = predictRisk([isNaN(att) ? 0 : att, isNaN(grade) ? 0 : grade, moodleCount]);
+      if (risk === 0) high++;
+      else if (risk === 1) med++;
+      else low++;
     });
+
+    setMlStats({ high, med, low });
 
     setStats({
       totalStudents: sicoa.length,
@@ -244,6 +266,38 @@ export default function Cohorte2025View() {
     }]
   };
 
+  // 3. Scatter Crossover (Moodle vs SICOA)
+  // Pre-calcular eventos por ID para ser rápidos
+  const moodleEvtsPorId = moodleData.reduce((acc, row) => {
+    const id = row.codigo_usuario;
+    if (id) acc[id] = (acc[id] || 0) + 1;
+    return acc;
+  }, {});
+
+  const crossoverData = {
+    datasets: [{
+      label: 'Estudiantes Cruzados',
+      data: sicoaData.map(row => ({
+        x: moodleEvtsPorId[row.ID_Estudiante] || 0,
+        y: parseFloat(row.PromedioFinalNumero) || 0
+      })).filter(d => d.x > 0),
+      backgroundColor: 'rgba(16, 185, 129, 0.4)',
+      borderColor: 'rgba(16, 185, 129, 0.8)',
+      pointRadius: 4,
+      pointHoverRadius: 7,
+      pointHoverBackgroundColor: '#fff'
+    }]
+  };
+
+  const crossoverOptions = {
+    ...commonChartOptions,
+    scales: {
+      ...commonChartOptions.scales,
+      x: { ...commonChartOptions.scales.x, title: { display: true, text: 'Total Interacciones Moodle', color: 'var(--text-muted)' } },
+      y: { ...commonChartOptions.scales.y, title: { display: true, text: 'Promedio Final SICOA', color: 'var(--text-muted)' }, min: 0, max: 10 }
+    }
+  };
+
   // ---- RENDER ----
   return (
     <div className="fade-in" style={{ display: 'flex', flexDirection: 'column', gap: '2rem', paddingBottom: '2rem' }}>
@@ -335,6 +389,20 @@ export default function Cohorte2025View() {
           </div>
         </div>
 
+        {/* Gráfico 3: CRUCE Moodle vs SICOA */}
+        <div className="glass-panel" style={{ padding: '1.5rem', borderRadius: '24px', display: 'flex', flexDirection: 'column', gridColumn: '1 / -1' }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+            <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#e2e8f0', display: 'flex', alignItems: 'center', gap: 8 }}>
+              <div style={{ width: 8, height: 24, borderRadius: 4, background: '#10b981' }}></div>
+              Correlación Predictiva: Interacciones Moodle vs. Promedio SICOA
+            </h3>
+            <span style={{ fontSize: '0.8rem', background: 'rgba(16, 185, 129, 0.1)', color: '#10b981', padding: '4px 10px', borderRadius: '12px', fontWeight: 600 }}>Cruce IA</span>
+          </div>
+          <div style={{ height: 350, width: '100%' }}>
+            <Scatter options={crossoverOptions} data={crossoverData} />
+          </div>
+        </div>
+
       </div>
 
       {/* AI PANEL PREMIUM */}
@@ -386,19 +454,19 @@ export default function Cohorte2025View() {
           <div style={{ background: 'rgba(239, 68, 68, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
             <div style={{ color: '#ef4444', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Alto</div>
             <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
-              {Math.round(stats.totalStudents * 0.14)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+              {mlStats.high} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
             </div>
           </div>
           <div style={{ background: 'rgba(245, 158, 11, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
             <div style={{ color: '#f59e0b', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Medio</div>
             <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
-              {Math.round(stats.totalStudents * 0.28)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+              {mlStats.med} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
             </div>
           </div>
           <div style={{ background: 'rgba(16, 185, 129, 0.1)', padding: '1.5rem', borderRadius: '16px', textAlign: 'center' }}>
             <div style={{ color: '#10b981', fontWeight: 700, fontSize: '0.9rem', textTransform: 'uppercase' }}>Riesgo Bajo (Seguros)</div>
             <div style={{ color: 'var(--text-main)', fontSize: '2rem', fontWeight: 800 }}>
-              {stats.totalStudents - Math.round(stats.totalStudents * 0.14) - Math.round(stats.totalStudents * 0.28)} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
+              {mlStats.low} <span style={{fontSize: '1rem', color: 'var(--text-muted)', fontWeight: 400}}>est.</span>
             </div>
           </div>
         </div>
